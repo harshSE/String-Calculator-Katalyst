@@ -55,9 +55,9 @@ public class StringCalculator {
 
     private String[] splitWithCustomSeparator(String stringNumber) {
         String[] stringNumbers;
-        int endIndexOfNewLineChar = stringNumber.indexOf("\\n");
+        int endIndexOfNewLineChar = stringNumber.indexOf("\n");
         String customSeparator = stringNumber.substring(2, endIndexOfNewLineChar);
-        String substring = stringNumber.substring(endIndexOfNewLineChar+2);
+        String substring = stringNumber.substring(endIndexOfNewLineChar+1);
         String regexString = ",\n" + customSeparator;
         stringNumbers = substring.split("[" + regexString + "]");
         return stringNumbers;
