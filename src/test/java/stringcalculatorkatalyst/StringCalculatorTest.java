@@ -34,22 +34,6 @@ public class StringCalculatorTest {
         assertThat(calculator.add(number), is(result));
     }
 
-    @Test
-    @Parameters({
-            "1\\,1,2",
-            "-1\\,1,0",
-            "1\\,-1,0",
-            "-1\\,-1,-2",
-            "0\\,0,0",
-            "-1\\,2,1",
-            "2\\,-1,1",
-            "-2\\,1,-1",
-            "1\\,-2,-1",
-    })
-    public void addingTwoStringIntegerNumbers_ReturnTheirSum(String numbers, int result) {
-        assertThat(calculator.add(numbers), is(result));
-    }
-
     public static char[][] emptyStrings() {
         return new char[][] {
                 {},
@@ -102,6 +86,15 @@ public class StringCalculatorTest {
             "1\\,1\\,-2,0",
             "1\\,0\\,2\\,5,8",
             "-1\\,-1\\,2\\,4\\,8,12",
+            "1\\,1,2",
+            "-1\\,1,0",
+            "1\\,-1,0",
+            "-1\\,-1,-2",
+            "0\\,0,0",
+            "-1\\,2,1",
+            "2\\,-1,1",
+            "-2\\,1,-1",
+            "1\\,-2,-1"
     })
     public void addingArbitraryNumberReturnTheirSum(String numbers, int result) {
         assertThat(calculator.add(numbers), is(result));
