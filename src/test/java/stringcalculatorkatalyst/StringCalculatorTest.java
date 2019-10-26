@@ -7,22 +7,28 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import stringcalculatorkatalyst.exception.ValidationException;
 
+import static org.hamcrest.CoreMatchers.any;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.equalToIgnoringCase;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.doThrow;
 
 @RunWith(JUnitParamsRunner.class)
 public class StringCalculatorTest {
     private StringCalculator calculator;
+    private CalInputStringParser parser;
 
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
 
     @Before
     public void setUp() {
-        calculator = new StringCalculator();
+        parser = Mockito.spy(new CalInputStringParser());
+        calculator = new StringCalculator(parser);
     }
 
     @Test
@@ -91,9 +97,12 @@ public class StringCalculatorTest {
     }
 
 
+    @Test
     public void addShouldThrowValidationFailExceptionWhenParsingFail() {
+        doThrow(new ValidationException("parsing fail")).when(parser).split(anyString());
         expectedException.expect(ValidationException.class);
         expectedException.expectMessage(equalToIgnoringCase("parsing fail"));
+
         calculator.add("//[[\n1***1");
     }
 

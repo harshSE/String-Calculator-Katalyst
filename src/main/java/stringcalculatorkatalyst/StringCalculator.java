@@ -1,21 +1,14 @@
 package stringcalculatorkatalyst;
 
-import stringcalculatorkatalyst.exception.ValidationException;
-
-import java.util.HashSet;
-import java.util.regex.Pattern;
-
 import static java.lang.Integer.parseInt;
-import static java.util.Arrays.asList;
 import static java.util.Objects.isNull;
 
 public class StringCalculator {
-    
+
     private CalInputStringParser parser;
 
-    public StringCalculator() {
-        parser = new CalInputStringParser();
-
+    public StringCalculator(CalInputStringParser parser) {
+        this.parser = parser;
     }
     public int add(String stringNumber) throws IllegalArgumentException{
 
