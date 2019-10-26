@@ -36,8 +36,14 @@ class CalInputStringParser {
         return stringNumberStream.map(String::trim).toArray(String[]::new);
     }
 
-    public int[] parse(String numbers) {
-        throw new UnsupportedOperationException("parsing not supported");
+    public int[] parse(String stringNumber) {
+        String[] stringNumbers = split(stringNumber);
+
+        int[] integers = new int[stringNumbers.length];
+        for (int index = 0; index < stringNumbers.length; index++) {
+            integers[index] = Integer.parseInt(stringNumbers[index]);
+        }
+        return integers;
     }
 
     private Stream<String> splitWithCustomSeparator(String stringNumber) {
