@@ -46,13 +46,6 @@ class CalInputStringParser {
 
         CustomSeparatorPatternFactory customSeparatorPatternFactory = provider.get(customSeparatorString);
         if(Objects.isNull(customSeparatorPatternFactory)) {
-            Pattern pattern = Pattern.compile("^(\\[[^\\]]+\\])+");
-            if(pattern.matcher(customSeparatorString).matches()) {
-                List<String> separators = extractSeparator(customSeparatorString);
-                String regexString = createRegex(separators);
-                return Pattern.compile(regexString);
-            }
-
             throw new IllegalArgumentException("Invalid expression provided after //");
         }
 

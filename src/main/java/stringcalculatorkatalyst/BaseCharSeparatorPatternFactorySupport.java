@@ -17,17 +17,18 @@ public abstract class BaseCharSeparatorPatternFactorySupport {
     protected String createRegex(List<String> separators) {
         StringBuilder newCustomSeparator = new StringBuilder();
         for (String separator : separators) {
-            char customSeparatorChar = separator.charAt(0);
 
             newCustomSeparator.append('|');
-            if(escapeCharacters.contains(customSeparatorChar)) {
+            for (int index = 0; index < separator.length(); index++) {
+                char customSeparatorChar = separator.charAt(index);
 
-                for(int index = 0; index < separator.length(); index++) {
+                if(escapeCharacters.contains(customSeparatorChar)) {
                     newCustomSeparator.append("\\").append(customSeparatorChar);
+                } else {
+                    newCustomSeparator.append(customSeparatorChar);
                 }
-            } else {
-                newCustomSeparator.append(customSeparatorChar);
             }
+
         }
 
         return ",|\n" + newCustomSeparator;

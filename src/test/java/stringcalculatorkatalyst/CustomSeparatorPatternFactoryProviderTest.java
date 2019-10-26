@@ -22,7 +22,6 @@ public class CustomSeparatorPatternFactoryProviderTest {
     @Test
     @Parameters({
             ";;",
-            "[*x][^]",
             "[*x];;",
             ";;[x]",
             "[*];"
@@ -34,19 +33,13 @@ public class CustomSeparatorPatternFactoryProviderTest {
     @Test
     @Parameters({
             "[*]",
-            "[*][^]"
-    })
-    public void getShouldReturnInstanceOfMultipleBracketAndSingleCharInstanceWhenMatchingArgumentFound(String argument) {
-        assertTrue(customSeparatorPatternFactoryProvider.get(argument) instanceof MultipleBracketAndSingleCharSeparatorPatternFactory);
-    }
-
-    @Test
-    @Parameters({
+            "[*][^]",
+            "[*x][^]",
             "[**]",
             "[***]"
     })
-    public void getShouldReturnInstanceOfSingleBracketAndMultipleCharsInstanceWhenMatchingArgumentFound(String argument) {
-        assertTrue(customSeparatorPatternFactoryProvider.get(argument) instanceof SingleBracketAndMultipleCharsSeparatorPatternFactory);
+    public void getShouldReturnInstanceOfMultipleBracketAndSingleCharInstanceWhenMatchingArgumentFound(String argument) {
+        assertTrue(customSeparatorPatternFactoryProvider.get(argument) instanceof MultipleBracketAndSingleCharSeparatorPatternFactory);
     }
 
     @Test

@@ -16,13 +16,23 @@ public class MultipleBracketAndSingleCharSeparatorPatternFactory extends BaseCha
 
     private List<String> extractSeparator(String customSeparatorString) {
         List<String> separators = new ArrayList<>();
-        for(int index = 0; index < customSeparatorString.length(); index+=3) {
-            if(customSeparatorString.charAt(index) == '[' && customSeparatorString.charAt(index+2) == ']') {
-                char separator = customSeparatorString.charAt(index + 1);
-                separators.add(""+separator);
+        for(int index = 0; index < customSeparatorString.length(); index++) {
+            if(customSeparatorString.charAt(index) == '[') {
+                String separator = fetchUntilClosingBracketNotFound(customSeparatorString, index+1);
+                index += separator.length() + 1;
+                separators.add(separator);
             }
         }
 
         return separators;
     }
+
+    private String fetchUntilClosingBracketNotFound(String customSeparatorString, int index) {
+        StringBuilder separator = new StringBuilder();
+        while (customSeparatorString.charAt(index) != ']') {
+            separator.append(customSeparatorString.charAt(index++));
+        }
+        return separator.toString();
+    }
+
 }
