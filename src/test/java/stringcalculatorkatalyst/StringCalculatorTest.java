@@ -123,6 +123,7 @@ public class StringCalculatorTest {
     @Test
     @Parameters({
             "//;\\n1;2,3",
+            "//*\\n1*2,3"
     })
     public void addShouldSupportCustomSeparator(String numbers, int result) {
         assertThat(calculator.add(numbers), is(result));
