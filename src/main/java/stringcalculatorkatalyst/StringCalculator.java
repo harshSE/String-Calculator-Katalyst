@@ -5,7 +5,7 @@ import static java.lang.Integer.parseInt;
 public class StringCalculator {
     public int add(String stringNumber) {
 
-        if(stringNumber.equals("")) {
+        if(stringNumber.trim().equals("")) {
             return 0;
         }
 
