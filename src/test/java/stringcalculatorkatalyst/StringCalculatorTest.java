@@ -21,7 +21,8 @@ public class StringCalculatorTest {
     @Test
     @Parameters({
             "1,1",
-            "2,2"
+            "2,2",
+            "-1,-1"
     })
     public void addingOneStringIntegerNumber_ReturnSameNumber(String number, int result) {
         assertThat(calculator.add(number), is(result));
