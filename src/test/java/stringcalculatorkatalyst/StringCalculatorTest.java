@@ -64,61 +64,13 @@ public class StringCalculatorTest {
         assertThat(calculator.add("1 ,  2"), is(3));
     }
 
-    @Test
-    @Parameters({
-            "1\\,1\\,,2",
-            "1\\,,1",
-    })
-    public void addShouldIgnoreLastCommaInArgument(String numbers, int result) {
-        assertThat(calculator.add(numbers), is(result));
-    }
+
 
     @Test
     public void addingNullStringThrowsIllegalArgumentException() {
         expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage(equalToIgnoringCase("null string not allowed"));
         calculator.add(null);
-    }
-
-    public String[]  commaSeparatedNumbers() {
-        return new String []{
-            "1\\,1\\,2,4",
-            "1\\,0\\,2\\,5,8",
-            "1\\,1,2",
-            "0\\,0,0",
-        };
-    }
-
-
-    public String[]  newLineSeparatedNumbers() {
-            return new String[] {
-                    "1\n1\n2,4"
-            };
-    }
-
-
-
-    public String[]  newLineAndCommaSeparatedNumbers() {
-        return new String[] {
-                "1\n1\\,2,4",
-        };
-
-    }
-
-    @Test
-    @Parameters(method = "commaSeparatedNumbers, newLineSeparatedNumbers, newLineAndCommaSeparatedNumbers")
-    public void addingArbitraryNumberWihNewLineOrCommaSeparatorReturnTheirSum(String numbers, int result) {
-        assertThat(calculator.add(numbers), is(result));
-    }
-
-    @Test
-    @Parameters({
-            "//;\n1;2,3",
-            "//*\n1*2,3",
-            "//[\n1[2,3"
-    })
-    public void addShouldSupportCustomSeparator(String numbers, int result) {
-        assertThat(calculator.add(numbers), is(result));
     }
 
     @Test
@@ -140,16 +92,6 @@ public class StringCalculatorTest {
 
     @Test
     @Parameters({
-            "//[***]\n1***1,2",
-            "//[+++]\n1+++1,2",
-            "//[^^^]\n1^^^1\n2,4",
-    })
-    public void addShouldAllowSeparatorWithArbitraryLenght(String numbers, int result) {
-        assertThat(calculator.add(numbers), is(result));
-    }
-
-    @Test
-    @Parameters({
             "//[[\n1***1",
             "//***\n1***1",
     })
@@ -157,28 +99,6 @@ public class StringCalculatorTest {
         expectedException.expect(ValidationException.class);
         expectedException.expectMessage(equalToIgnoringCase("Only single character is allowed as custom separator"));
         calculator.add(numbers);
-    }
-
-    @Test
-    public void addShouldThrowValidationFailExceptionWhenNoSeparatorProvided() {
-        expectedException.expect(ValidationException.class);
-        expectedException.expectMessage(equalToIgnoringCase("No separator provided"));
-        calculator.add("//\n1***1");
-    }
-
-
-    @Test
-    public void addShouldThrowValidationFailExceptionWhenNoSeparatorProvidedBetweenBracket() {
-        expectedException.expect(ValidationException.class);
-        expectedException.expectMessage(equalToIgnoringCase("No separator provided between bracket"));
-        calculator.add("//[]\n1***1");
-    }
-
-    @Test
-    public void addShouldThrowValidationFailExceptionWhenClosingBracketNotProvided() {
-        expectedException.expect(ValidationException.class);
-        expectedException.expectMessage(equalToIgnoringCase("No closing bracket provided"));
-        calculator.add("//[***\n1***1");
     }
 
 }
