@@ -6,6 +6,7 @@ import java.util.regex.Pattern;
 
 public class MultipleBracketAndSingleCharSeparatorPatternFactory extends BaseCharSeparatorPatternFactorySupport implements CustomSeparatorPatternFactory {
 
+    @Override
     public Pattern createPattern(String customSeparatorString) {
         List<String> separators = extractSeparator(customSeparatorString);
         String regexString = createRegex(separators);

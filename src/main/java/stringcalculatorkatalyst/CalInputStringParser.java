@@ -1,22 +1,18 @@
 package stringcalculatorkatalyst;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
+import java.util.Objects;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
-
-import static java.util.Arrays.asList;
 
 class CalInputStringParser {
 
     private Pattern pattern;
-    private HashSet<Character> escapeCharacters;
+    private CustomSeparatorPatternFactoryProvider provider;
 
 
     public CalInputStringParser() {
         pattern = Pattern.compile("[,\n]");
-        escapeCharacters = new HashSet<>(asList('\\','^','*', '$','.','|','?','+','(',')','[',']','{','}'));
+        provider = new CustomSeparatorPatternFactoryProvider();
     }
 
     public int[] parse(String stringNumber) throws IllegalArgumentException{
@@ -31,6 +27,7 @@ class CalInputStringParser {
         if(val.startsWith("//")) {
             int startIndexOfNewLineChar = val.indexOf("\n");
             stringNumberToParse = val.substring(startIndexOfNewLineChar + 1);
+
             patternToUsed = createPattern(val.substring(2, startIndexOfNewLineChar));
         } else {
             patternToUsed = pattern;
@@ -44,52 +41,13 @@ class CalInputStringParser {
 
     private Pattern createPattern(String customSeparatorString) {
 
-        Pattern pattern1 = Pattern.compile("^(\\[.\\])+");
-
-        List<String> separators = new ArrayList<>();
-
-        if(pattern1.matcher(customSeparatorString).matches()) {
-            extractSeparator(customSeparatorString, separators);
-        } else if(customSeparatorString.startsWith("[") && Pattern.compile("^\\[[^\\]]+\\]").matcher(customSeparatorString).matches()) {
-            String customSeparator = customSeparatorString.substring(1, customSeparatorString.length() - 1);
-            separators.add(customSeparator);
-        } else if(Pattern.compile("^.").matcher(customSeparatorString).matches()) {
-            separators.add(customSeparatorString);
-        } else {
+        CustomSeparatorPatternFactory customSeparatorPatternFactory = provider.get(customSeparatorString);
+        if(Objects.isNull(customSeparatorPatternFactory)) {
             throw new IllegalArgumentException("Invalid expression provided after //");
         }
 
-        String regexString = createRegex(separators);
-        return  Pattern.compile(regexString);
+        return customSeparatorPatternFactory.createPattern(customSeparatorString);
 
-    }
-
-    private void extractSeparator(String customSeparatorString, List<String> separators) {
-        for(int index = 0; index < customSeparatorString.length(); index+=3) {
-            if(customSeparatorString.charAt(index) == '[' && customSeparatorString.charAt(index+2) == ']') {
-                char separator = customSeparatorString.charAt(index + 1);
-                separators.add(""+separator);
-            }
-        }
-    }
-
-    private String createRegex(List<String> separators) {
-        StringBuilder newCustomSeparator = new StringBuilder();
-        for (String separator : separators) {
-            char customSeparatorChar = separator.charAt(0);
-
-            newCustomSeparator.append('|');
-            if(escapeCharacters.contains(customSeparatorChar)) {
-
-                for(int index = 0; index < separator.length(); index++) {
-                    newCustomSeparator.append("\\").append(customSeparatorChar);
-                }
-            } else {
-                newCustomSeparator.append(customSeparatorChar);
-            }
-        }
-
-        return ",|\n" + newCustomSeparator;
     }
 
 }

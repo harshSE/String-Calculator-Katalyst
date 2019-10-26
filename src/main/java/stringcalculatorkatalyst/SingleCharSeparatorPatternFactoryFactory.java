@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 public class SingleCharSeparatorPatternFactoryFactory extends BaseCharSeparatorPatternFactorySupport implements CustomSeparatorPatternFactory {
+
+    @Override
     public Pattern createPattern(String customSeparatorString) {
 
         List<String> separators = new ArrayList<>();
