@@ -1,9 +1,17 @@
 package stringcalculatorkatalyst;
 
+import java.util.regex.Pattern;
+
 import static java.lang.Integer.parseInt;
 import static java.util.Objects.isNull;
 
 public class StringCalculator {
+    private Pattern pattern;
+
+    public StringCalculator() {
+
+        pattern = Pattern.compile(",|\n");
+    }
     public int add(String stringNumber) throws IllegalArgumentException{
 
         if(isNull(stringNumber)) {
@@ -18,7 +26,7 @@ public class StringCalculator {
     }
 
     private int addNumbers(String stringNumber) {
-        String[] stringNumbers = split(stringNumber);
+        String[] stringNumbers = pattern.split(stringNumber);
 
         int sum = toInt(stringNumbers[0]);
         for(int index = 1; index < stringNumbers.length; index++) {
@@ -26,10 +34,6 @@ public class StringCalculator {
         }
 
         return sum;
-    }
-
-    private String[] split(String stringNumber) {
-        return stringNumber.split(",|\n");
     }
 
     private int toInt(String stringNumber) {
