@@ -127,8 +127,13 @@ public class StringCalculatorTest {
     }
 
     @Test
-    public void addingNumberBiggerThan1000WillBeIgnored() {
-        assertThat(calculator.add("1000,1001"), is(1000));
+    @Parameters({
+            "1001,0",
+            "1000\\,1001,1000",
+            "1000\\,999\\,1001,1999"
+    })
+    public void addingNumberBiggerThan1000WillBeIgnored(String numbers, int result) {
+        assertThat(calculator.add(numbers), is(result));
     }
 
 }
