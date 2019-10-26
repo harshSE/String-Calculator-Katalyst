@@ -27,7 +27,7 @@ public class CustomSeparatorPatternFactoryProviderTest {
     @Test
     @Parameters({
             "[*]",
-            "[*]\\,[^]"
+            "[*][^]"
     })
     public void getShouldReturnInstanceOfMultipleCommaAndSingleCharInstanceWhenMatchingArgumentFound(String argument) {
         assertTrue(customSeparatorPatternFactoryProvider.get(argument) instanceof MultipleCommaAndSingleCharSeparatorFactory);
