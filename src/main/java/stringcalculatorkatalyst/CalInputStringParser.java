@@ -2,7 +2,10 @@ package stringcalculatorkatalyst;
 
 import stringcalculatorkatalyst.exception.ValidationException;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
@@ -22,7 +25,16 @@ class CalInputStringParser {
 
         String val = stringNumber.trim();
 
-        Stream<String> stringNumberStream;
+        Stream<String> stringNumberStream = null;
+
+
+        if(stringNumber.startsWith("//")) {
+            stringNumberStream = splitWithPatten(stringNumber);
+        }
+
+        if(Objects.nonNull(stringNumberStream)) {
+            return stringNumberStream.map(String::trim).mapToInt(Integer::parseInt).toArray();
+        }
 
         if(stringNumber.startsWith("//[")) {
             stringNumberStream = splitWithArbitraryLengthOfCustomSeparator(val);
@@ -33,6 +45,43 @@ class CalInputStringParser {
         }
 
         return stringNumberStream.map(String::trim).mapToInt(Integer::parseInt).toArray();
+    }
+
+    private Stream<String> splitWithPatten(String stringNumber) {
+        int startIndexOfNewLineChar = stringNumber.indexOf("\n");
+
+        List<Character> separators = new ArrayList<>();
+        for(int index = 2; index < startIndexOfNewLineChar; index+=3) {
+            if(stringNumber.charAt(index) == '[' && stringNumber.charAt(index+2) == ']') {
+                char separator = stringNumber.charAt(index + 1);
+                separators.add(separator);
+            } else {
+                break;
+            }
+        }
+
+        if(separators.isEmpty()) {
+            return null;
+        }
+
+        StringBuilder newCustomSeparator = new StringBuilder();
+        for (Character separator : separators) {
+
+            if(escapeCharacters.contains(separator)) {
+                newCustomSeparator.append('|').append("\\").append(separator);
+            }
+
+        }
+
+        String regex = ",|\n" + newCustomSeparator;
+        Pattern pattern = Pattern.compile(regex);
+
+        String substring = stringNumber.substring(startIndexOfNewLineChar + 1);
+
+        return  pattern.splitAsStream(substring);
+
+
+
     }
 
     private Stream<String> splitWithCustomSeparator(String stringNumber) {
