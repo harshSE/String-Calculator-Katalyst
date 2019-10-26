@@ -4,6 +4,7 @@ import stringcalculatorkatalyst.exception.ValidationException;
 
 import java.util.HashSet;
 import java.util.regex.Pattern;
+import java.util.stream.Stream;
 
 import static java.util.Arrays.asList;
 
@@ -22,24 +23,21 @@ class CalInputStringParser {
 
         String val = stringNumber.trim();
 
-        String[] stringNumbers;
+        Stream<String> stringNumberStream;
 
         if(stringNumber.startsWith("//[")) {
-            stringNumbers = splitWithArbitraryLengthOfCustomSeparator(val);
+            stringNumberStream = splitWithArbitraryLengthOfCustomSeparator(val);
         } else if(stringNumber.startsWith("//")) {
-            stringNumbers = splitWithCustomSeparator(val);
+            stringNumberStream = splitWithCustomSeparator(val);
         } else {
-            stringNumbers = pattern.split(val);
+            stringNumberStream = pattern.splitAsStream(val);
         }
 
-        String[] numbers = new String[stringNumbers.length];
-        for (int index = 0; index < stringNumbers.length; index++) {
-            numbers[index] = stringNumbers[index].trim();
-        }
-        return numbers;
+
+        return stringNumberStream.map(String::trim).toArray(String[]::new);
     }
 
-    private String[] splitWithCustomSeparator(String stringNumber) {
+    private Stream<String> splitWithCustomSeparator(String stringNumber) {
         int endIndexOfNewLineChar = stringNumber.indexOf("\n");
 
         if (isNoCharBetweenDoubleSlashAndNewChar(endIndexOfNewLineChar)) {
@@ -58,7 +56,7 @@ class CalInputStringParser {
         return endIndexOfNewLineChar == 2;
     }
 
-    private String[] splitWithArbitraryLengthOfCustomSeparator(String stringNumber) {
+    private Stream<String> splitWithArbitraryLengthOfCustomSeparator(String stringNumber) {
 
         int endIndexOfNewLineChar = stringNumber.indexOf("\n");
         int endIndex = endIndexOfNewLineChar - 1;
@@ -80,13 +78,13 @@ class CalInputStringParser {
         return indexOfClosingBracket - 2 == 1;
     }
 
-    private String[] splitWithCustomSeparator(String stringNumber, int endIndexOfNewLineChar, int beginIndex, int endIndex) {
+    private Stream<String> splitWithCustomSeparator(String stringNumber, int endIndexOfNewLineChar, int beginIndex, int endIndex) {
         String[] stringNumbers;
         String customSeparator = stringNumber.substring(beginIndex, endIndex);
         String substring = stringNumber.substring(endIndexOfNewLineChar + 1);
         String regexString = createRegexString(customSeparator);
-        stringNumbers = substring.split(regexString);
-        return stringNumbers;
+        Pattern pattern = Pattern.compile(regexString);
+        return  pattern.splitAsStream(substring);
     }
 
     private String createRegexString(String customSeparator) {
