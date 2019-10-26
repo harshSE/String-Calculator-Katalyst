@@ -26,7 +26,8 @@ public class MultipleBracketAndSingleCharSeparatorFactoryTest {
 
     public Object[][] parametersForCreatePatternFromProvidedInput() {
         return new Object[][] {
-                {"[*]", Pattern.compile(",|\n|\\*")}
+                {"[*]", Pattern.compile(",|\n|\\*")},
+                {"[*][^]", Pattern.compile(",|\n|\\*|\\^")}
         };
     }
     @Test
