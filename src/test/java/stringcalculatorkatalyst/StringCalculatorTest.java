@@ -80,8 +80,8 @@ public class StringCalculatorTest {
         calculator.add(null);
     }
 
-    @Test
-    @Parameters({
+    public String[]  commaSeparatedNumbers() {
+        return new String []{
             "1\\,1\\,2,4",
             "1\\,1\\,-2,0",
             "1\\,0\\,2\\,5,8",
@@ -95,23 +95,27 @@ public class StringCalculatorTest {
             "2\\,-1,1",
             "-2\\,1,-1",
             "1\\,-2,-1"
-    })
-    public void addingArbitraryNumberReturnTheirSum(String numbers, int result) {
-        assertThat(calculator.add(numbers), is(result));
+        };
+    }
+
+
+    public String[]  newLineSeparatedNumbers() {
+            return new String[] {
+                    "1\n1\n2,4"
+            };
+    }
+
+
+
+    public String[]  newLineAndCommaSeparatedNumbers() {
+        return new String[] {
+                "1\n1\\,2,4",
+        };
+
     }
 
     @Test
-    @Parameters({
-            "1\n1\n2,4",
-    })
-    public void addingArbitraryNumberWihNewLineSeperatorReturnTheirSum(String numbers, int result) {
-        assertThat(calculator.add(numbers), is(result));
-    }
-
-    @Test
-    @Parameters({
-            "1\n1\\,2,4",
-    })
+    @Parameters(method = "commaSeparatedNumbers, newLineSeparatedNumbers, newLineAndCommaSeparatedNumbers")
     public void addingArbitraryNumberWihNewLineOrCommaSeparatorReturnTheirSum(String numbers, int result) {
         assertThat(calculator.add(numbers), is(result));
     }
