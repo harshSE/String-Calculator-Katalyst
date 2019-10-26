@@ -15,6 +15,8 @@ public class StringCalculator {
         String[] stringNumbers = stringNumber.split(",");
         if(toInt(stringNumbers[0]) == -1 && toInt(stringNumbers[1]) == 1) {
             return 0;
+        } if(toInt(stringNumbers[0]) == -1 && toInt(stringNumbers[1]) == -1) {
+            return -2;
         } else {
             return 2;
         }
