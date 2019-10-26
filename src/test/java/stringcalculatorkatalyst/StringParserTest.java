@@ -95,13 +95,22 @@ public class StringParserTest {
         assertThat(parser.parse(numbers), is(equalTo(result)));
     }
 
-
-    @Test
-    public void parseShouldAllowMultipleSeparatorsWithSingleCharacter() {
-        assertThat(parser.parse("//[*][+][^]\n1*1+2^3"), is(equalTo(new int[]{1,1,2,3})));
+    public Object[][]  multipleSeparatorsWithMultipleCharacters() {
+        return new Object [][]{
+                {"//[*][+][^]\n1*1+2^3", new int[]{1,1,2,3}},
+                {"//[*x][+][^]\n1*x1+2^3", new int[]{1,1,2,3}},
+                {"//[*][+s][^]\n1*1+s2^3", new int[]{1,1,2,3}},
+                {"//[*][+][^x]\n1*1+2^x3", new int[]{1,1,2,3}},
+        };
     }
 
-    public Object[][]  multipleSeparatorsWithMultipleCharacters() {
+    @Test
+    @Parameters(method = "separatorWithArbitraryLength")
+    public void parseShouldAllowMultipleSeparatorsWithSingleCharacter(String numbers, int[] result) {
+        assertThat(parser.parse("//[*][+][^]\n1*1+2^3"), is(equalTo(result)));
+    }
+
+    public Object[][]  multipleSeparatorsWithMultipleCharacters_dep() {
         return new Object [][]{
                 {"//[*x][+][^]\n1*1+2^3"},
                 {"//[*][+s][^]\n1*1+2^3"},
@@ -110,7 +119,7 @@ public class StringParserTest {
     }
 
     @Test
-    @Parameters(method = "multipleSeparatorsWithMultipleCharacters")
+    @Parameters(method = "multipleSeparatorsWithMultipleCharacters_dep")
     public void parseShouldThrowIllegalArgumentExceptionWhenMultipleSeparatorsWithMultipleCharactersFound(String numbers) {
         expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage(equalToIgnoringCase("Invalid expression provided after //"));
