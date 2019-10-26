@@ -31,7 +31,12 @@ class CalInputStringParser {
         } else {
             stringNumbers = pattern.split(val);
         }
-        return stringNumbers;
+
+        String[] numbers = new String[stringNumbers.length];
+        for (int index = 0; index < stringNumbers.length; index++) {
+            numbers[index] = stringNumbers[index].trim();
+        }
+        return numbers;
     }
 
     private String[] splitWithCustomSeparator(String stringNumber) {
