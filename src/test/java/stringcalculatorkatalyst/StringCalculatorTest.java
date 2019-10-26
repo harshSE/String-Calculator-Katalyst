@@ -30,7 +30,7 @@ public class StringCalculatorTest {
             "1,1",
             "0,0",
     })
-    public void addingOneStringIntegerNumber_ReturnSameNumber(String number, int result) {
+    public void addingOneStringIntegerNumberReturnSameNumber(String number, int result) {
         assertThat(calculator.add(number), is(result));
     }
 
@@ -44,7 +44,7 @@ public class StringCalculatorTest {
 
     @Test
     @Parameters(method = "emptyStrings")
-    public void addingEmptyString_ReturnZero(char[] argument) {
+    public void addingEmptyStringReturnZero(char[] argument) {
         String stringNumber = new String(argument);
         assertThat(calculator.add(stringNumber), is(0));
     }
@@ -168,5 +168,7 @@ public class StringCalculatorTest {
         expectedException.expectMessage(equalToIgnoringCase("No separator provided"));
         calculator.add(numbers);
     }
+
+
 
 }

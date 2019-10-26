@@ -57,12 +57,20 @@ public class StringCalculator {
     private String[] splitWithCustomSeparator(String stringNumber) {
         int endIndexOfNewLineChar = stringNumber.indexOf("\n");
 
-        if (endIndexOfNewLineChar == 2) {
+        if (isNoCharBetweenDoubleSlashAndNewChar(endIndexOfNewLineChar)) {
             throw new ValidationException("No separator provided");
-        } else if (endIndexOfNewLineChar != 3) {
+        } else if (isMoreThanOneCharBetweenDoubleSlashAndNewChar(endIndexOfNewLineChar)) {
             throw new ValidationException("Only single character is allowed as custom separator");
         }
         return splitWithCustomSeparator(stringNumber, endIndexOfNewLineChar, 2, endIndexOfNewLineChar);
+    }
+
+    private boolean isMoreThanOneCharBetweenDoubleSlashAndNewChar(int endIndexOfNewLineChar) {
+        return endIndexOfNewLineChar != 3;
+    }
+
+    private boolean isNoCharBetweenDoubleSlashAndNewChar(int endIndexOfNewLineChar) {
+        return endIndexOfNewLineChar == 2;
     }
 
     private String[] splitWithArbitraryLengthOfCustomSeparator(String stringNumber) {
