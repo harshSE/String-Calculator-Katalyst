@@ -86,7 +86,7 @@ public class StringParserTest {
     public Object[][]  separatorWithArbitraryLength() {
         return new Object [][]{
                 {"//[***]\n1***1", new int[]{1,1}},
-                {"//[+++]\n1+++1", new int[]{1,1}},
+                {"//[+]\n1+1", new int[]{1,1}},
                 {"//[^^^]\n1^^^1\n2", new int[]{1,1,2}},
         };
     }
@@ -100,6 +100,22 @@ public class StringParserTest {
     @Test
     public void splitShouldAllowMultipleSeparatorsWithSingleCharacter() {
         assertThat(parser.parse("//[*][+][^]\n1*1+2^3"), is(equalTo(new int[]{1,1,2,3})));
+    }
+
+    public Object[][]  multipleSeparatorsWithMultipleCharacters() {
+        return new Object [][]{
+                {"//[*x][+][^]\n1*1+2^3"},
+                {"//[*][+s][^]\n1*1+2^3"},
+                {"//[*][+][^x]\n1*1+2^3"},
+        };
+    }
+
+    @Test
+    @Parameters(method = "multipleSeparatorsWithMultipleCharacters")
+    public void splitShouldThrowIllegalArgumentExceptionWhenMultipleSeparatorsWithMultipleCharactersFound(String numbers) {
+        expectedException.expect(IllegalArgumentException.class);
+        expectedException.expectMessage(equalToIgnoringCase("Invalid expression provided after //"));
+        parser.parse(numbers);
     }
 
     public Object[][]  moreThenOneCharacterFoundWithoutBracket() {
