@@ -36,8 +36,8 @@ public class StringParserTest {
         assertThat(parser.split(numbers), is(equalTo(result)));
     }
 
-    public String[]  commaSeparatedNumbers() {
-        return new String []{
+    public Object[]  commaSeparatedNumbers() {
+        return new Object []{
                 "1\\,1\\,2,1,1,2",
                 "1\\,0\\,2\\,5,1,0,2,5",
                 "1\\,1,1,1",
@@ -46,16 +46,16 @@ public class StringParserTest {
     }
 
 
-    public String[]  newLineSeparatedNumbers() {
-        return new String[] {
+    public Object[]  newLineSeparatedNumbers() {
+        return new Object[] {
                 "1\n1\n2,1,1,2"
         };
     }
 
 
 
-    public String[]  newLineAndCommaSeparatedNumbers() {
-        return new String[] {
+    public Object[]  newLineAndCommaSeparatedNumbers() {
+        return new Object[] {
                 "1\n1\\,2,1,1,2",
         };
 
@@ -67,9 +67,31 @@ public class StringParserTest {
         assertThat(parser.split(numbers), is(equalTo(result)));
     }
 
+    public Object[][]  commaSeparatedNumbersForParse() {
+        return new Object [][]{
+                {"1,1,2", new int[]{1,1,2}},
+        };
+    }
+
+
+    public Object[][]  newLineSeparatedNumbersForParse() {
+        return new Object[][] {
+                {"1\n1\n2", new int[]{1,1,2}}
+        };
+    }
+
+
+
+    public Object[][]  newLineAndCommaSeparatedNumbersForParse() {
+        return new Object[][] {
+                {"1\n1,2", new int[]{1,1,2}}
+        };
+
+    }
+
     @Test
-    @Parameters(method = "commaSeparatedNumbers, newLineSeparatedNumbers, newLineAndCommaSeparatedNumbers")
-    public void parsingArbitraryNumberWihNewLineOrCommaSeparator(String numbers, int [] result) {
+    @Parameters(method = "commaSeparatedNumbersForParse, newLineSeparatedNumbersForParse, newLineAndCommaSeparatedNumbersForParse")
+    public void parsingArbitraryNumberWihNewLineOrCommaSeparator(String numbers, int[] result) {
         assertThat(parser.parse(numbers), is(equalTo(result)));
     }
 
