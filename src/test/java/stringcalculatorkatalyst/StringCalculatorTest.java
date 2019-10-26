@@ -55,21 +55,6 @@ public class StringCalculatorTest {
     }
 
 
-    @Test
-    public void addShouldRemoveHeadingAndTrailingWhiteSpace() {
-        assertThat(calculator.add(" 1 "), is(1));
-        /*
-            as paramrunner trim the arguments, adding two test cases to ease. other option is hierarchical context runner
-         */
-        assertThat(calculator.add(" 1,2 "), is(3));
-    }
-
-    @Test
-    public void addShouldRemoveWhiteSpacesBetweenNumbers() {
-        assertThat(calculator.add("1 ,  2"), is(3));
-    }
-
-
 
     @Test
     public void addingNullStringThrowsIllegalArgumentException() {
