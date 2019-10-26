@@ -35,7 +35,7 @@ public class StringCalculator {
     }
 
     private int toInt(String stringNumber) {
-        int val = parseInt(stringNumber.trim());
+        int val = parseInt(stringNumber);
         if(val < 0) {
             throw new IllegalArgumentException("negatives not allowed");
         }
