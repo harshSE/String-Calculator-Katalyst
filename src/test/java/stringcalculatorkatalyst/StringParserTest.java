@@ -27,54 +27,26 @@ public class StringParserTest {
     }
 
 
+    public Object[][]  lastCommaInArgument() {
+        return new Object [][]{
+                {"1,1,1,", new int[]{1,1,1}},
+                {"1,", new int[]{1}}
+        };
+    }
     @Test
-    @Parameters({
-            "1\\,1\\,1,1,1,1",
-            "1\\,,1",
-    })
-    public void splitShouldIgnoreLastCommaInArgument(String numbers, String [] result) {
-        assertThat(parser.split(numbers), is(equalTo(result)));
+    @Parameters(method = "lastCommaInArgument")
+    public void splitShouldIgnoreLastCommaInArgument(String numbers, int [] result) {
+        assertThat(parser.parse(numbers), is(equalTo(result)));
     }
 
-    public Object[]  commaSeparatedNumbers() {
-        return new Object []{
-                "1\\,1\\,2,1,1,2",
-                "1\\,0\\,2\\,5,1,0,2,5",
-                "1\\,1,1,1",
-                "0\\,0,0,0",
-        };
-    }
-
-
-    public Object[]  newLineSeparatedNumbers() {
-        return new Object[] {
-                "1\n1\n2,1,1,2"
-        };
-    }
-
-
-
-    public Object[]  newLineAndCommaSeparatedNumbers() {
-        return new Object[] {
-                "1\n1\\,2,1,1,2",
-        };
-
-    }
-
-    @Test
-    @Parameters(method = "commaSeparatedNumbers, newLineSeparatedNumbers, newLineAndCommaSeparatedNumbers")
-    public void splittingArbitraryNumberWihNewLineOrCommaSeparator(String numbers, String [] result) {
-        assertThat(parser.split(numbers), is(equalTo(result)));
-    }
-
-    public Object[][]  commaSeparatedNumbersForParse() {
+    public Object[][]  commaSeparatedNumbers() {
         return new Object [][]{
                 {"1,1,2", new int[]{1,1,2}},
         };
     }
 
 
-    public Object[][]  newLineSeparatedNumbersForParse() {
+    public Object[][]  newLineSeparatedNumbers() {
         return new Object[][] {
                 {"1\n1\n2", new int[]{1,1,2}}
         };
@@ -82,7 +54,7 @@ public class StringParserTest {
 
 
 
-    public Object[][]  newLineAndCommaSeparatedNumbersForParse() {
+    public Object[][]  newLineAndCommaSeparatedNumbers() {
         return new Object[][] {
                 {"1\n1,2", new int[]{1,1,2}}
         };
@@ -90,41 +62,53 @@ public class StringParserTest {
     }
 
     @Test
-    @Parameters(method = "commaSeparatedNumbersForParse, newLineSeparatedNumbersForParse, newLineAndCommaSeparatedNumbersForParse")
+    @Parameters(method = "commaSeparatedNumbers, newLineSeparatedNumbers, newLineAndCommaSeparatedNumbers")
     public void parsingArbitraryNumberWihNewLineOrCommaSeparator(String numbers, int[] result) {
         assertThat(parser.parse(numbers), is(equalTo(result)));
     }
 
-    @Test
-    @Parameters({
-            "//;\n1;2,1,2",
-            "//*\n1*2,1,2",
-            "//[\n1[2,1,2"
-    })
-    public void splitShouldSupportCustomSeparator(String numbers, String [] result) {
-        assertThat(parser.split(numbers), is(equalTo(result)));
-    }
 
-
-    @Test
-    @Parameters({
-            "//[***]\n1***1,1,1",
-            "//[+++]\n1+++1,1,1",
-            "//[^^^]\n1^^^1\n2,1,1,2",
-    })
-    public void splitShouldAllowSeparatorWithArbitraryLength(String numbers, String [] result) {
-        assertThat(parser.split(numbers), is(equalTo(result)));
+    public Object[][]  customSeparator() {
+        return new Object [][]{
+                {"//;\n1;2", new int[]{1,2}},
+                {"//*\n1*2", new int[]{1,2}},
+                {"//[\n1[2", new int[]{1,2}},
+        };
     }
 
     @Test
-    @Parameters({
-            "//[[\n1***1",
-            "//***\n1***1",
-    })
+    @Parameters(method = "customSeparator")
+    public void splitShouldSupportCustomSeparator(String numbers, int [] result) {
+        assertThat(parser.parse(numbers), is(equalTo(result)));
+    }
+
+
+    public Object[][]  separatorWithArbitraryLength() {
+        return new Object [][]{
+                {"//[***]\n1***1", new int[]{1,1}},
+                {"//[+++]\n1+++1", new int[]{1,1}},
+                {"//[^^^]\n1^^^1\n2", new int[]{1,1,2}},
+        };
+    }
+    @Test
+    @Parameters(method = "separatorWithArbitraryLength")
+    public void splitShouldAllowSeparatorWithArbitraryLength(String numbers, int [] result) {
+        assertThat(parser.parse(numbers), is(equalTo(result)));
+    }
+
+    public Object[][]  moreThenOneCharacterFoundWithoutBracket() {
+        return new Object [][]{
+                {"//[[\n1***1"},
+                {"//***\n1***1"},
+        };
+    }
+
+    @Test
+    @Parameters(method = "moreThenOneCharacterFoundWithoutBracket")
     public void splitShouldThrowValidationFailExceptionWhenMoreThenOneCharacterFoundWithoutBracket(String numbers) {
         expectedException.expect(ValidationException.class);
         expectedException.expectMessage(equalToIgnoringCase("Only single character is allowed as custom separator"));
-        parser.split(numbers);
+        parser.parse(numbers);
     }
 
 
@@ -132,7 +116,7 @@ public class StringParserTest {
     public void splitShouldThrowValidationFailExceptionWhenNoSeparatorProvided() {
         expectedException.expect(ValidationException.class);
         expectedException.expectMessage(equalToIgnoringCase("No separator provided"));
-        parser.split("//\n1***1");
+        parser.parse("//\n1***1");
     }
 
 
@@ -140,28 +124,28 @@ public class StringParserTest {
     public void splitShouldThrowValidationFailExceptionWhenNoSeparatorProvidedBetweenBracket() {
         expectedException.expect(ValidationException.class);
         expectedException.expectMessage(equalToIgnoringCase("No separator provided between bracket"));
-        parser.split("//[]\n1***1");
+        parser.parse("//[]\n1***1");
     }
 
     @Test
     public void splitShouldThrowValidationFailExceptionWhenClosingBracketNotProvided() {
         expectedException.expect(ValidationException.class);
         expectedException.expectMessage(equalToIgnoringCase("No closing bracket provided"));
-        parser.split("//[***\n1***1");
+        parser.parse("//[***\n1***1");
     }
 
     @Test
     public void addShouldRemoveHeadingAndTrailingWhiteSpace() {
-        assertThat(parser.split(" 1 "), is(equalTo(new String[]{"1"})));
+        assertThat(parser.parse(" 1 "), is(equalTo(new int[]{1})));
         /*
             as paramrunner trim the arguments, adding two test cases to ease. other option is hierarchical context runner
          */
-        assertThat(parser.split(" 1,2 "), is(equalTo(new String[]{"1","2"})));
+        assertThat(parser.parse(" 1,2 "), is(equalTo(new int[]{1,2})));
     }
 
     @Test
     public void addShouldRemoveWhiteSpacesBetweenNumbers() {
-        assertThat(parser.split("1 ,  2"), is(equalTo(new String[]{"1","2"})));
+        assertThat(parser.parse("1 ,  2"), is(equalTo(new int[]{1,2})));
     }
 
 

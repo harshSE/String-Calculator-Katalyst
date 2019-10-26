@@ -1,6 +1,5 @@
 package stringcalculatorkatalyst;
 
-import static java.lang.Integer.parseInt;
 import static java.util.Objects.isNull;
 
 public class StringCalculator {
