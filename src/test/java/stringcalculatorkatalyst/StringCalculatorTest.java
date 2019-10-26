@@ -136,4 +136,12 @@ public class StringCalculatorTest {
         assertThat(calculator.add(numbers), is(result));
     }
 
+    @Test
+    @Parameters({
+            "//[***]\n1***1,2",
+    })
+    public void addShouldAllowSeperatorWithArbitraryLenght(String numbers, int result) {
+        assertThat(calculator.add(numbers), is(result));
+    }
+
 }
