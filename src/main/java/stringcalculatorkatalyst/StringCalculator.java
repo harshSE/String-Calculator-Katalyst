@@ -1,6 +1,5 @@
 package stringcalculatorkatalyst;
 
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.regex.Pattern;
 
@@ -44,7 +43,7 @@ public class StringCalculator {
         String[] stringNumbers;
 
         if(stringNumber.startsWith("//[")) {
-            stringNumbers = splitWithArbitraryLengthOfCustomSeperator(stringNumber);
+            stringNumbers = splitWithArbitraryLengthOfCustomSeparator(stringNumber);
         } else if(stringNumber.startsWith("//")) {
             stringNumbers = splitWithCustomSeparator(stringNumber);
         } else {
@@ -54,20 +53,20 @@ public class StringCalculator {
     }
 
     private String[] splitWithCustomSeparator(String stringNumber) {
-        String[] stringNumbers;
         int endIndexOfNewLineChar = stringNumber.indexOf("\n");
-        String customSeparator = stringNumber.substring(2, endIndexOfNewLineChar);
-        String substring = stringNumber.substring(endIndexOfNewLineChar+1);
-        String regexString = ",\n" + customSeparator;
-        stringNumbers = substring.split("[" + regexString + "]");
-        return stringNumbers;
+        return splitWithCustomSeparator(stringNumber, endIndexOfNewLineChar, 2, endIndexOfNewLineChar);
     }
 
-    private String[] splitWithArbitraryLengthOfCustomSeperator(String stringNumber) {
-        String[] stringNumbers;
+    private String[] splitWithArbitraryLengthOfCustomSeparator(String stringNumber) {
         int endIndexOfNewLineChar = stringNumber.indexOf("\n");
-        String customSeparator = stringNumber.substring(3, endIndexOfNewLineChar-1);
-        String substring = stringNumber.substring(endIndexOfNewLineChar+1);
+        int endIndex = endIndexOfNewLineChar - 1;
+        return splitWithCustomSeparator(stringNumber, endIndexOfNewLineChar, 3, endIndex);
+    }
+
+    private String[] splitWithCustomSeparator(String stringNumber, int endIndexOfNewLineChar, int beginIndex, int endIndex) {
+        String[] stringNumbers;
+        String customSeparator = stringNumber.substring(beginIndex, endIndex);
+        String substring = stringNumber.substring(endIndexOfNewLineChar + 1);
         String regexString = createRegexString(customSeparator);
         stringNumbers = substring.split(regexString);
         return stringNumbers;
