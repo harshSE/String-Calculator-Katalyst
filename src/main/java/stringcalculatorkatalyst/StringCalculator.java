@@ -29,12 +29,7 @@ public class StringCalculator {
     }
 
     private String[] split(String stringNumber) {
-        String separator = ",";
-
-        if(stringNumber.contains("\n")) {
-            separator = "\n";
-        }
-        return stringNumber.split(separator);
+        return stringNumber.split(",|\n");
     }
 
     private int toInt(String stringNumber) {
