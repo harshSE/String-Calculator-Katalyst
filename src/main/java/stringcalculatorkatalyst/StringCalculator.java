@@ -22,6 +22,6 @@ public class StringCalculator {
     }
 
     private int toInt(String stringNumber) {
-        return parseInt(stringNumber);
+        return parseInt(stringNumber.trim());
     }
 }
