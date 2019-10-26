@@ -1,5 +1,7 @@
 package stringcalculatorkatalyst;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.regex.Pattern;
 
 import static java.lang.Integer.parseInt;
@@ -37,7 +39,23 @@ public class StringCalculator {
 
     private String[] split(String stringNumber) {
         String[] stringNumbers;
-        if(stringNumber.startsWith("//")) {
+        if(stringNumber.startsWith("//[")) {
+            int endIndexOfNewLineChar = stringNumber.indexOf("\n");
+            String customSeparator = stringNumber.substring(3, endIndexOfNewLineChar-1);
+            String substring = stringNumber.substring(endIndexOfNewLineChar+1);
+            HashSet<Character> escapeCharacters = new HashSet<>(Arrays.asList('\\','^','*'));
+
+            char customSeparatorChar = customSeparator.charAt(0);
+            if(escapeCharacters.contains(customSeparatorChar)) {
+                StringBuilder newCustomSeparator = new StringBuilder();
+                for(int index = 0; index < customSeparator.length(); index++) {
+                    newCustomSeparator.append("\\").append(customSeparatorChar);
+                }
+                customSeparator = newCustomSeparator.toString();
+            }
+            String regexString = ",|\n|" + customSeparator;
+            stringNumbers = substring.split(regexString);
+        } else if(stringNumber.startsWith("//")) {
             int endIndexOfNewLineChar = stringNumber.indexOf("\\n");
             String customSeparator = stringNumber.substring(2, endIndexOfNewLineChar);
             String substring = stringNumber.substring(endIndexOfNewLineChar+2);
