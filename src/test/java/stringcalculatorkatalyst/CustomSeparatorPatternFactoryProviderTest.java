@@ -20,8 +20,15 @@ public class CustomSeparatorPatternFactoryProviderTest {
         customSeparatorPatternFactoryProvider =  new CustomSeparatorPatternFactoryProvider();
     }
     @Test
-    public void getShouldReturnNullWhenNotMatchingProviderFound() {
-        assertThat(customSeparatorPatternFactoryProvider.get(";;"), is(nullValue()));
+    @Parameters({
+            ";;",
+            "[*x][^]",
+            "[*x];;",
+            ";;[x]",
+            "[*];"
+    })
+    public void getShouldReturnNullWhenNotMatchingProviderFound(String argument) {
+        assertThat(customSeparatorPatternFactoryProvider.get(argument), is(nullValue()));
     }
 
     @Test
