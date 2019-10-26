@@ -19,14 +19,17 @@ class CalInputStringParser {
     }
 
     public String[] split(String stringNumber) {
+
+        String val = stringNumber.trim();
+
         String[] stringNumbers;
 
         if(stringNumber.startsWith("//[")) {
-            stringNumbers = splitWithArbitraryLengthOfCustomSeparator(stringNumber);
+            stringNumbers = splitWithArbitraryLengthOfCustomSeparator(val);
         } else if(stringNumber.startsWith("//")) {
-            stringNumbers = splitWithCustomSeparator(stringNumber);
+            stringNumbers = splitWithCustomSeparator(val);
         } else {
-            stringNumbers = pattern.split(stringNumber);
+            stringNumbers = pattern.split(val);
         }
         return stringNumbers;
     }
