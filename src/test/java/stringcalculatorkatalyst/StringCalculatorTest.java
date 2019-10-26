@@ -75,8 +75,12 @@ public class StringCalculatorTest {
     }
 
     @Test
-    public void addShouldIgnoreLastCommaInArgument() {
-        assertThat(calculator.add("1,"), is(1));
+    @Parameters({
+            "1\\,1\\,,2",
+            "1\\,,1",
+    })
+    public void addShouldIgnoreLastCommaInArgument(String numbers, int result) {
+        assertThat(calculator.add(numbers), is(result));
     }
 
 
