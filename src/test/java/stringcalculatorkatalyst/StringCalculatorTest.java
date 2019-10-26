@@ -7,6 +7,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
+import stringcalculatorkatalyst.exception.ValidationException;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.equalToIgnoringCase;
@@ -144,6 +145,13 @@ public class StringCalculatorTest {
     })
     public void addShouldAllowSeparatorWithArbitraryLenght(String numbers, int result) {
         assertThat(calculator.add(numbers), is(result));
+    }
+
+    @Test
+    public void addShouldThrowValidationFailExceptionWhenMoreThenOneCharacterFoundWithoutBracket() {
+        expectedException.expect(ValidationException.class);
+        expectedException.expectMessage(equalToIgnoringCase("Only single character is allowed as custom separator"));
+        calculator.add("//***\n1***1,2");
     }
 
 }
