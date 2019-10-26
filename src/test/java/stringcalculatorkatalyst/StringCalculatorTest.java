@@ -74,5 +74,10 @@ public class StringCalculatorTest {
         assertThat(calculator.add("1 ,  2"), is(3));
     }
 
+    @Test
+    public void addShouldIgnoreLastCommaInArgument() {
+        assertThat(calculator.add("1,"), is(1));
+    }
+
 
 }
