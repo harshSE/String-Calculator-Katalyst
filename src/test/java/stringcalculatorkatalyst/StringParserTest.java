@@ -105,9 +105,9 @@ public class StringParserTest {
     }
 
     @Test
-    @Parameters(method = "separatorWithArbitraryLength")
+    @Parameters(method = "multipleSeparatorsWithMultipleCharacters")
     public void parseShouldAllowMultipleSeparatorsWithSingleCharacter(String numbers, int[] result) {
-        assertThat(parser.parse("//[*][+][^]\n1*1+2^3"), is(equalTo(result)));
+        assertThat(parser.parse(numbers), is(equalTo(result)));
     }
 
     public Object[][]  multipleSeparatorsWithMultipleCharacters_dep() {
