@@ -122,4 +122,13 @@ public class StringParserTest {
         parser.split("//[***\n1***1");
     }
 
+    @Test
+    public void addShouldRemoveHeadingAndTrailingWhiteSpace() {
+        assertThat(parser.split(" 1 "), is(equalTo(new String[]{"1"})));
+        /*
+            as paramrunner trim the arguments, adding two test cases to ease. other option is hierarchical context runner
+         */
+        assertThat(parser.split(" 1,2 "), is(equalTo(new String[]{"1","2"})));
+    }
+
 }
