@@ -56,7 +56,10 @@ public class StringCalculator {
 
     private String[] splitWithCustomSeparator(String stringNumber) {
         int endIndexOfNewLineChar = stringNumber.indexOf("\n");
-        if(endIndexOfNewLineChar != 3) {
+
+        if (endIndexOfNewLineChar == 2) {
+            throw new ValidationException("No separator provided");
+        } else if (endIndexOfNewLineChar != 3) {
             throw new ValidationException("Only single character is allowed as custom separator");
         }
         return splitWithCustomSeparator(stringNumber, endIndexOfNewLineChar, 2, endIndexOfNewLineChar);
