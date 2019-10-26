@@ -174,4 +174,11 @@ public class StringCalculatorTest {
         calculator.add("//[]\n1***1");
     }
 
+    @Test
+    public void addShouldThrowValidationFailExceptionWhenClosingBracketNotProvided() {
+        expectedException.expect(ValidationException.class);
+        expectedException.expectMessage(equalToIgnoringCase("No closing bracket provided"));
+        calculator.add("//[\n1***1");
+    }
+
 }
