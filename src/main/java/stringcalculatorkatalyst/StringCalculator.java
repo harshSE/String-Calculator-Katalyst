@@ -18,12 +18,7 @@ public class StringCalculator {
     }
 
     private int addNumbers(String stringNumber) {
-        String separator = ",";
-
-        if(stringNumber.contains("\n")) {
-            separator = "\n";
-        }
-        String[] stringNumbers = stringNumber.split(separator);
+        String[] stringNumbers = split(stringNumber);
 
         int sum = toInt(stringNumbers[0]);
         for(int index = 1; index < stringNumbers.length; index++) {
@@ -31,6 +26,15 @@ public class StringCalculator {
         }
 
         return sum;
+    }
+
+    private String[] split(String stringNumber) {
+        String separator = ",";
+
+        if(stringNumber.contains("\n")) {
+            separator = "\n";
+        }
+        return stringNumber.split(separator);
     }
 
     private int toInt(String stringNumber) {
