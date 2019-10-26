@@ -47,13 +47,7 @@ class CalInputStringParser {
         List<String> separators = new ArrayList<>();
 
         if(pattern1.matcher(customSeparatorString).matches()) {
-            for(int index = 0; index < customSeparatorString.length(); index+=3) {
-                if(customSeparatorString.charAt(index) == '[' && customSeparatorString.charAt(index+2) == ']') {
-                    char separator = customSeparatorString.charAt(index + 1);
-                    separators.add(""+separator);
-                }
-            }
-
+            extractSeparator(customSeparatorString, separators);
         } else if(customSeparatorString.startsWith("[") && Pattern.compile("^\\[[^\\]]+\\]").matcher(customSeparatorString).matches()) {
             String customSeparator = customSeparatorString.substring(1, customSeparatorString.length() - 1);
             separators.add(customSeparator);
@@ -66,6 +60,15 @@ class CalInputStringParser {
         String regexString = createRegex(separators);
         return  Pattern.compile(regexString);
 
+    }
+
+    private void extractSeparator(String customSeparatorString, List<String> separators) {
+        for(int index = 0; index < customSeparatorString.length(); index+=3) {
+            if(customSeparatorString.charAt(index) == '[' && customSeparatorString.charAt(index+2) == ']') {
+                char separator = customSeparatorString.charAt(index + 1);
+                separators.add(""+separator);
+            }
+        }
     }
 
     private String createRegex(List<String> separators) {
