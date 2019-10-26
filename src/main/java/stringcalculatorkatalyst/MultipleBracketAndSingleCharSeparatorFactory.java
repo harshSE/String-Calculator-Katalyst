@@ -17,11 +17,7 @@ public class MultipleBracketAndSingleCharSeparatorFactory implements CustomSepar
     }
 
     public Pattern createPattern(String customSeparatorString) {
-
-        List<String> separators = new ArrayList<>();
-
-
-        extractSeparator(customSeparatorString, separators);
+        List<String> separators = extractSeparator(customSeparatorString);
 
 
         String regexString = createRegex(separators);
@@ -29,13 +25,16 @@ public class MultipleBracketAndSingleCharSeparatorFactory implements CustomSepar
 
     }
 
-    private void extractSeparator(String customSeparatorString, List<String> separators) {
+    private List<String> extractSeparator(String customSeparatorString) {
+        List<String> separators = new ArrayList<>();
         for(int index = 0; index < customSeparatorString.length(); index+=3) {
             if(customSeparatorString.charAt(index) == '[' && customSeparatorString.charAt(index+2) == ']') {
                 char separator = customSeparatorString.charAt(index + 1);
                 separators.add(""+separator);
             }
         }
+
+        return separators;
     }
 
     private String createRegex(List<String> separators) {
