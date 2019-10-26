@@ -4,6 +4,11 @@ import static java.lang.Integer.parseInt;
 
 public class StringCalculator {
     public int add(String stringNumber) {
+
+        if(stringNumber.equals("")) {
+            return 0;
+        }
+
         if(stringNumber.contains(",")) {
             return addNumbers(stringNumber);
         } else {
