@@ -159,4 +159,14 @@ public class StringCalculatorTest {
         calculator.add(numbers);
     }
 
+    @Test
+    @Parameters({
+            "//\n1***1",
+    })
+    public void addShouldThrowValidationFailExceptionWhenNoSeparatorProvided(String numbers) {
+        expectedException.expect(ValidationException.class);
+        expectedException.expectMessage(equalToIgnoringCase("No separator provided"));
+        calculator.add(numbers);
+    }
+
 }
