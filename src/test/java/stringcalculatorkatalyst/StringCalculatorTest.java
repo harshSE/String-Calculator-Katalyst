@@ -47,13 +47,15 @@ public class StringCalculatorTest {
     public static char[][] emptyStrings() {
         return new char[][] {
                 {},
-                {' '}
+                {' '},
+                {' ', ' ', ' '}
         };
     }
 
     @Test
     @Parameters(method = "emptyStrings")
     public void addingEmptyString_ReturnZero(char[] argument) {
-        assertThat(calculator.add(new String(argument)), is(0));
+        String stringNumber = new String(argument);
+        assertThat(calculator.add(stringNumber), is(0));
     }
 }
