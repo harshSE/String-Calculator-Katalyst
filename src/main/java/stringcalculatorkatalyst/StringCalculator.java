@@ -25,17 +25,7 @@ public class StringCalculator {
     }
 
     private int addNumbers(String stringNumber) {
-        String[] stringNumbers1;
-        if(stringNumber.startsWith("//")) {
-            int endIndexOfNewLineChar = stringNumber.indexOf("\\n");
-            String customSeparator = stringNumber.substring(2, endIndexOfNewLineChar);
-            String substring = stringNumber.substring(endIndexOfNewLineChar+2);
-            String regexString = ",\n" + customSeparator;
-            stringNumbers1 = substring.split("[" + regexString + "]");
-        } else {
-            stringNumbers1 = pattern.split(stringNumber);
-        }
-        String[] stringNumbers = stringNumbers1;
+        String[] stringNumbers = split(stringNumber);
 
 
         int sum = toInt(stringNumbers[0]);
@@ -44,6 +34,20 @@ public class StringCalculator {
         }
 
         return sum;
+    }
+
+    private String[] split(String stringNumber) {
+        String[] stringNumbers;
+        if(stringNumber.startsWith("//")) {
+            int endIndexOfNewLineChar = stringNumber.indexOf("\\n");
+            String customSeparator = stringNumber.substring(2, endIndexOfNewLineChar);
+            String substring = stringNumber.substring(endIndexOfNewLineChar+2);
+            String regexString = ",\n" + customSeparator;
+            stringNumbers = substring.split("[" + regexString + "]");
+        } else {
+            stringNumbers = pattern.split(stringNumber);
+        }
+        return stringNumbers;
     }
 
     private int toInt(String stringNumber) {
