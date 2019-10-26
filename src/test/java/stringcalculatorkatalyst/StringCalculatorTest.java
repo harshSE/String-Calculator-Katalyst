@@ -1,6 +1,6 @@
 package stringcalculatorkatalyst;
 
-import org.hamcrest.CoreMatchers;
+import org.junit.Before;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -8,6 +8,11 @@ import static org.junit.Assert.assertThat;
 
 public class StringCalculatorTest {
     private StringCalculator calculator;
+
+    @Before
+    public void setUp() {
+        calculator = new StringCalculator();
+    }
 
     @Test
     public void addingOneStringIntegerNumber_ReturnSameNumber() {
