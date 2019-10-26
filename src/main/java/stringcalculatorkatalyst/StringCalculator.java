@@ -76,8 +76,11 @@ public class StringCalculator {
     private String[] splitWithArbitraryLengthOfCustomSeparator(String stringNumber) {
         int endIndexOfNewLineChar = stringNumber.indexOf("\n");
         int endIndex = endIndexOfNewLineChar - 1;
-        if(stringNumber.charAt(endIndex) == '[') {
+        char charAtEndIndex = stringNumber.charAt(endIndex);
+        if (charAtEndIndex == '[') {
             return splitWithCustomSeparator(stringNumber);
+        } else if (charAtEndIndex == ']' && endIndex - 2 == 1) {
+            throw new ValidationException("No separator provided between bracket");
         }
         return splitWithCustomSeparator(stringNumber, endIndexOfNewLineChar, 3, endIndex);
     }
