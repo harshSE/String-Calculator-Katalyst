@@ -32,7 +32,7 @@ public class MultipleBracketAndSingleCharSeparatorFactoryTest {
     @Test
     @Parameters(method = "parametersForCreatePatternFromProvidedInput")
     public void createPatternThatIncludeDefaultSeparatorFromProvidedInput(String string, Pattern pattern) {
-        assertThat(factory.createPattern(string), is(equalTo(pattern)));
+        assertThat(factory.createPattern(string).pattern(), is(equalTo(pattern.pattern())));
     }
 
 
