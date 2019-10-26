@@ -4,14 +4,16 @@ import java.util.regex.Pattern;
 
 public class CustomSeparatorPatternFactoryProvider {
 
-    public CustomSeparatorPatternFactory get(String customSeparatorString) {
-        Pattern pattern = Pattern.compile("^(\\[.\\])+");
+    private Pattern multipleBracketAndSingleCharPatten = Pattern.compile("^(\\[.\\])+");
+    private Pattern singleBracketAndMultipleCharPatten = Pattern.compile("^\\[[^\\]]+\\]");
+    private Pattern singleCharPatten = Pattern.compile("^.");
 
-        if(pattern.matcher(customSeparatorString).matches()) {
+    public CustomSeparatorPatternFactory get(String customSeparatorString) {
+        if(multipleBracketAndSingleCharPatten.matcher(customSeparatorString).matches()) {
             return new MultipleCommaAndSingleCharSeparatorFactory();
-        } else if(customSeparatorString.startsWith("[") && Pattern.compile("^\\[[^\\]]+\\]").matcher(customSeparatorString).matches()) {
+        } else if(customSeparatorString.startsWith("[") && singleBracketAndMultipleCharPatten.matcher(customSeparatorString).matches()) {
            return new SingleBracketAndMultipleCharsSeparatorFactory();
-        } else if(Pattern.compile("^.").matcher(customSeparatorString).matches()) {
+        } else if(singleCharPatten.matcher(customSeparatorString).matches()) {
             return new SingleCharSeparatorFactory();
         } else {
             return null;
