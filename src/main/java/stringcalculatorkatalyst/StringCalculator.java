@@ -25,16 +25,17 @@ public class StringCalculator {
     }
 
     private int addNumbers(String stringNumber) {
-        String[] stringNumbers;
+        String[] stringNumbers1;
         if(stringNumber.startsWith("//")) {
-            int endIndex = stringNumber.indexOf("\\n");
-            String customSeparator = stringNumber.substring(2, endIndex);
-            String substring = stringNumber.substring(endIndex+2);
-            stringNumbers = substring.split(",|\n|" + customSeparator);
+            int endIndexOfNewLineChar = stringNumber.indexOf("\\n");
+            String customSeparator = stringNumber.substring(2, endIndexOfNewLineChar);
+            String substring = stringNumber.substring(endIndexOfNewLineChar+2);
+            String regexString = ",\n" + customSeparator;
+            stringNumbers1 = substring.split("[" + regexString + "]");
         } else {
-            stringNumbers = pattern.split(stringNumber);
+            stringNumbers1 = pattern.split(stringNumber);
         }
-
+        String[] stringNumbers = stringNumbers1;
 
 
         int sum = toInt(stringNumbers[0]);
