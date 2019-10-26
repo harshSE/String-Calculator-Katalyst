@@ -131,4 +131,9 @@ public class StringParserTest {
         assertThat(parser.split(" 1,2 "), is(equalTo(new String[]{"1","2"})));
     }
 
+    @Test
+    public void addShouldRemoveWhiteSpacesBetweenNumbers() {
+        assertThat(parser.split("1 ,  2"), is(equalTo(new String[]{"1","2"})));
+    }
+
 }
