@@ -42,4 +42,13 @@ public class CustomSeparatorPatternFactoryProviderTest {
         assertTrue(customSeparatorPatternFactoryProvider.get(argument) instanceof SingleBracketAndMultipleCharsSeparatorFactory);
     }
 
+    @Test
+    @Parameters({
+            "$",
+            "*"
+    })
+    public void getShouldReturnInstanceOfSingleCharInstanceWhenMatchingArgumentFound(String argument) {
+        assertTrue(customSeparatorPatternFactoryProvider.get(argument) instanceof SingleCharSeparatorFactory);
+    }
+
 }
