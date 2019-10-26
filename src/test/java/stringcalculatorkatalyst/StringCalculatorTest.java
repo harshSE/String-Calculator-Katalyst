@@ -43,4 +43,9 @@ public class StringCalculatorTest {
     public void addingTwoStringIntegerNumbers_ReturnTheirSum(String numbers, int result) {
         assertThat(calculator.add(numbers), is(result));
     }
+
+    @Test
+    public void addingEmptyString_ReturnZero() {
+        assertThat(calculator.add(""), is(0));
+    }
 }
