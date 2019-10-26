@@ -44,8 +44,16 @@ public class StringCalculatorTest {
         assertThat(calculator.add(numbers), is(result));
     }
 
+    public static char[][] emptyStrings() {
+        return new char[][] {
+                {},
+                {' '}
+        };
+    }
+
     @Test
-    public void addingEmptyString_ReturnZero() {
-        assertThat(calculator.add(""), is(0));
+    @Parameters(method = "emptyStrings")
+    public void addingEmptyString_ReturnZero(char[] argument) {
+        assertThat(calculator.add(new String(argument)), is(0));
     }
 }
