@@ -58,4 +58,12 @@ public class StringCalculatorTest {
         String stringNumber = new String(argument);
         assertThat(calculator.add(stringNumber), is(0));
     }
+
+
+    @Test
+    public void addShouldRemoveHeadingAndTrailingWhiteSpace() {
+        assertThat(calculator.add(" 1 "), is(1));
+    }
+
+
 }
