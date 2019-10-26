@@ -2,19 +2,18 @@ package stringcalculatorkatalyst;
 
 import stringcalculatorkatalyst.exception.ValidationException;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 import static java.util.Arrays.asList;
+import static java.util.Collections.singletonList;
 
 class CalInputStringParser {
 
     private Pattern pattern;
     private HashSet<Character> escapeCharacters;
+
 
     public CalInputStringParser() {
         pattern = Pattern.compile("[,\n]");
@@ -50,11 +49,11 @@ class CalInputStringParser {
     private Stream<String> splitWithPatten(String stringNumber) {
         int startIndexOfNewLineChar = stringNumber.indexOf("\n");
 
-        List<Character> separators = new ArrayList<>();
+        List<String> separators = new ArrayList<>();
         for(int index = 2; index < startIndexOfNewLineChar; index+=3) {
             if(stringNumber.charAt(index) == '[' && stringNumber.charAt(index+2) == ']') {
                 char separator = stringNumber.charAt(index + 1);
-                separators.add(separator);
+                separators.add(""+separator);
             } else {
                 break;
             }
@@ -64,16 +63,7 @@ class CalInputStringParser {
             return null;
         }
 
-        StringBuilder newCustomSeparator = new StringBuilder();
-        for (Character separator : separators) {
-
-            if(escapeCharacters.contains(separator)) {
-                newCustomSeparator.append('|').append("\\").append(separator);
-            }
-
-        }
-
-        String regex = ",|\n" + newCustomSeparator;
+        String regex = createRegex(separators);
         Pattern pattern = Pattern.compile(regex);
 
         String substring = stringNumber.substring(startIndexOfNewLineChar + 1);
@@ -83,6 +73,8 @@ class CalInputStringParser {
 
 
     }
+
+
 
     private Stream<String> splitWithCustomSeparator(String stringNumber) {
         int endIndexOfNewLineChar = stringNumber.indexOf("\n");
@@ -129,22 +121,33 @@ class CalInputStringParser {
 
         String customSeparator = stringNumber.substring(beginIndex, endIndex);
         String substring = stringNumber.substring(endIndexOfNewLineChar + 1);
-        String regexString = createRegexString(customSeparator);
+        String regexString = createRegex(singletonList(customSeparator));
         Pattern pattern = Pattern.compile(regexString);
         return  pattern.splitAsStream(substring);
     }
 
-    private String createRegexString(String customSeparator) {
-        char customSeparatorChar = customSeparator.charAt(0);
-        if(escapeCharacters.contains(customSeparatorChar)) {
-            StringBuilder newCustomSeparator = new StringBuilder();
-            for(int index = 0; index < customSeparator.length(); index++) {
-                newCustomSeparator.append("\\").append(customSeparatorChar);
+
+
+    private String createRegex(List<String> separators) {
+        StringBuilder newCustomSeparator = new StringBuilder();
+        for (String separator : separators) {
+            char customSeparatorChar = separator.charAt(0);
+
+            newCustomSeparator.append('|');
+            if(escapeCharacters.contains(customSeparatorChar)) {
+
+                for(int index = 0; index < separator.length(); index++) {
+                    newCustomSeparator.append("\\").append(customSeparatorChar);
+                }
+            } else {
+                newCustomSeparator.append(customSeparatorChar);
             }
-            customSeparator = newCustomSeparator.toString();
         }
-        return ",|\n|" + customSeparator;
+
+        return ",|\n" + newCustomSeparator;
     }
+
+
 
 
 }
