@@ -24,7 +24,7 @@ public class StringCalculator {
         return addNumbers(stringNumber);
     }
 
-    private int addNumbers(String stringNumber) {
+    private int addNumbers(String stringNumber) throws IllegalArgumentException{
         String[] stringNumbers = split(stringNumber);
 
         int sum = toInt(stringNumbers[0]);
@@ -50,6 +50,10 @@ public class StringCalculator {
     }
 
     private int toInt(String stringNumber) {
-        return parseInt(stringNumber.trim());
+        int val = parseInt(stringNumber.trim());
+        if(val < 0) {
+            throw new IllegalArgumentException("negatives not allowed");
+        }
+        return val;
     }
 }
