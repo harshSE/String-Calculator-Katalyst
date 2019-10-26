@@ -81,8 +81,12 @@ public class StringCalculator {
             return splitWithCustomSeparator(stringNumber);
         } else if (charAtEndIndex == ']' && isAnyCharsBetweenBracket(endIndex)) {
             throw new ValidationException("No separator provided between bracket");
+        }  else if (charAtEndIndex != ']') {
+            throw new ValidationException("No closing bracket provided");
+        } else {
+            return splitWithCustomSeparator(stringNumber, endIndexOfNewLineChar, 3, endIndex);
         }
-        return splitWithCustomSeparator(stringNumber, endIndexOfNewLineChar, 3, endIndex);
+
     }
 
     private boolean isAnyCharsBetweenBracket(int indexOfClosingBracket) {
