@@ -1,7 +1,5 @@
 package stringcalculatorkatalyst;
 
-import java.util.Objects;
-
 import static java.lang.Integer.parseInt;
 import static java.util.Objects.isNull;
 
@@ -23,8 +21,8 @@ public class StringCalculator {
         String[] stringNumbers = stringNumber.split(",");
 
         int sum = toInt(stringNumbers[0]);
-        if(stringNumbers.length == 2) {
-            sum += toInt(stringNumbers[1]);
+        for(int index = 1; index < stringNumbers.length; index++) {
+            sum += toInt(stringNumbers[index]);
         }
 
         return sum;
