@@ -178,7 +178,7 @@ public class StringCalculatorTest {
     public void addShouldThrowValidationFailExceptionWhenClosingBracketNotProvided() {
         expectedException.expect(ValidationException.class);
         expectedException.expectMessage(equalToIgnoringCase("No closing bracket provided"));
-        calculator.add("//[\n1***1");
+        calculator.add("//[***\n1***1");
     }
 
 }
