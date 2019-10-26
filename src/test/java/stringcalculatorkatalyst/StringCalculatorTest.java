@@ -167,5 +167,11 @@ public class StringCalculatorTest {
     }
 
 
+    @Test
+    public void addShouldThrowValidationFailExceptionWhenNoSeparatorProvidedBetweenBracket() {
+        expectedException.expect(ValidationException.class);
+        expectedException.expectMessage(equalToIgnoringCase("No separator provided between bracket"));
+        calculator.add("//[]\n1***1");
+    }
 
 }
