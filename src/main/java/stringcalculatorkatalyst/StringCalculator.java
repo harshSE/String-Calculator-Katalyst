@@ -79,10 +79,14 @@ public class StringCalculator {
         char charAtEndIndex = stringNumber.charAt(endIndex);
         if (charAtEndIndex == '[') {
             return splitWithCustomSeparator(stringNumber);
-        } else if (charAtEndIndex == ']' && endIndex - 2 == 1) {
+        } else if (charAtEndIndex == ']' && isAnyCharsBetweenBracket(endIndex)) {
             throw new ValidationException("No separator provided between bracket");
         }
         return splitWithCustomSeparator(stringNumber, endIndexOfNewLineChar, 3, endIndex);
+    }
+
+    private boolean isAnyCharsBetweenBracket(int indexOfClosingBracket) {
+        return indexOfClosingBracket - 2 == 1;
     }
 
     private String[] splitWithCustomSeparator(String stringNumber, int endIndexOfNewLineChar, int beginIndex, int endIndex) {
