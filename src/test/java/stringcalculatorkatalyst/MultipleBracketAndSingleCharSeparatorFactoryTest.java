@@ -2,8 +2,6 @@ package stringcalculatorkatalyst;
 
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
-import org.hamcrest.CoreMatchers;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,11 +15,11 @@ import static org.junit.Assert.assertThat;
 @RunWith(JUnitParamsRunner.class)
 public class MultipleBracketAndSingleCharSeparatorFactoryTest {
 
-    private MultipleBracketAndSingleCharSeparatorFactory factory;
+    private MultipleBracketAndSingleCharSeparatorPatternFactory factory;
 
     @Before
     public void setUp() {
-        factory = new MultipleBracketAndSingleCharSeparatorFactory();
+        factory = new MultipleBracketAndSingleCharSeparatorPatternFactory();
     }
 
     public Object[][] parametersForCreatePatternFromProvidedInput() {

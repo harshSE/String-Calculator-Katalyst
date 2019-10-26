@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
-public class SingleBracketAndMultipleCharsSeparatorFactory extends BaseCharSeparatorSupport implements CustomSeparatorPatternFactory{
+public class SingleBracketAndMultipleCharsSeparatorPatternFactory extends BaseCharSeparatorPatternFactorySupport implements CustomSeparatorPatternFactory{
 
     public Pattern createPattern(String customSeparatorString) {
         List<String> separators = new ArrayList<>();

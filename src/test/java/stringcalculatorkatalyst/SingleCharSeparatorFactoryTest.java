@@ -14,11 +14,11 @@ import static org.junit.Assert.assertThat;
 
 @RunWith(JUnitParamsRunner.class)
 public class SingleCharSeparatorFactoryTest {
-    private SingleCharSeparatorFactory factory;
+    private SingleCharSeparatorPatternFactoryFactory factory;
 
     @Before
     public void setUp() {
-        factory = new SingleCharSeparatorFactory();
+        factory = new SingleCharSeparatorPatternFactoryFactory();
     }
 
     public Object[][] parametersForCreatePatternFromProvidedInput() {

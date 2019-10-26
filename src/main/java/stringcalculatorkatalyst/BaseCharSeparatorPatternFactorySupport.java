@@ -5,12 +5,12 @@ import java.util.List;
 
 import static java.util.Arrays.asList;
 
-public abstract class BaseCharSeparatorSupport {
+public abstract class BaseCharSeparatorPatternFactorySupport {
 
     private HashSet<Character> escapeCharacters;
 
 
-    public BaseCharSeparatorSupport() {
+    public BaseCharSeparatorPatternFactorySupport() {
         escapeCharacters = new HashSet<>(asList('\\','^','*', '$','.','|','?','+','(',')','[',']','{','}'));
     }
 

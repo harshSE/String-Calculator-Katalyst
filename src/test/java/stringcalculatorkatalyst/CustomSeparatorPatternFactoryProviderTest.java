@@ -37,7 +37,7 @@ public class CustomSeparatorPatternFactoryProviderTest {
             "[*][^]"
     })
     public void getShouldReturnInstanceOfMultipleBracketAndSingleCharInstanceWhenMatchingArgumentFound(String argument) {
-        assertTrue(customSeparatorPatternFactoryProvider.get(argument) instanceof MultipleBracketAndSingleCharSeparatorFactory);
+        assertTrue(customSeparatorPatternFactoryProvider.get(argument) instanceof MultipleBracketAndSingleCharSeparatorPatternFactory);
     }
 
     @Test
@@ -46,7 +46,7 @@ public class CustomSeparatorPatternFactoryProviderTest {
             "[***]"
     })
     public void getShouldReturnInstanceOfSingleBracketAndMultipleCharsInstanceWhenMatchingArgumentFound(String argument) {
-        assertTrue(customSeparatorPatternFactoryProvider.get(argument) instanceof SingleBracketAndMultipleCharsSeparatorFactory);
+        assertTrue(customSeparatorPatternFactoryProvider.get(argument) instanceof SingleBracketAndMultipleCharsSeparatorPatternFactory);
     }
 
     @Test
@@ -55,7 +55,7 @@ public class CustomSeparatorPatternFactoryProviderTest {
             "*"
     })
     public void getShouldReturnInstanceOfSingleCharInstanceWhenMatchingArgumentFound(String argument) {
-        assertTrue(customSeparatorPatternFactoryProvider.get(argument) instanceof SingleCharSeparatorFactory);
+        assertTrue(customSeparatorPatternFactoryProvider.get(argument) instanceof SingleCharSeparatorPatternFactoryFactory);
     }
 
 }

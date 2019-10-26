@@ -10,11 +10,11 @@ public class CustomSeparatorPatternFactoryProvider {
 
     public CustomSeparatorPatternFactory get(String customSeparatorString) {
         if(multipleBracketAndSingleCharPatten.matcher(customSeparatorString).matches()) {
-            return new MultipleBracketAndSingleCharSeparatorFactory();
+            return new MultipleBracketAndSingleCharSeparatorPatternFactory();
         } else if(customSeparatorString.startsWith("[") && singleBracketAndMultipleCharPatten.matcher(customSeparatorString).matches()) {
-           return new SingleBracketAndMultipleCharsSeparatorFactory();
+           return new SingleBracketAndMultipleCharsSeparatorPatternFactory();
         } else if(singleCharPatten.matcher(customSeparatorString).matches()) {
-            return new SingleCharSeparatorFactory();
+            return new SingleCharSeparatorPatternFactoryFactory();
         } else {
             return null;
         }
