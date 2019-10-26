@@ -65,6 +65,9 @@ public class StringCalculator {
     private String[] splitWithArbitraryLengthOfCustomSeparator(String stringNumber) {
         int endIndexOfNewLineChar = stringNumber.indexOf("\n");
         int endIndex = endIndexOfNewLineChar - 1;
+        if(stringNumber.charAt(endIndex) == '[') {
+            return splitWithCustomSeparator(stringNumber);
+        }
         return splitWithCustomSeparator(stringNumber, endIndexOfNewLineChar, 3, endIndex);
     }
 
