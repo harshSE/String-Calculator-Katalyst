@@ -3,15 +3,21 @@ package stringcalculatorkatalyst;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.equalToIgnoringCase;
 import static org.junit.Assert.assertThat;
 
 @RunWith(JUnitParamsRunner.class)
 public class StringCalculatorTest {
     private StringCalculator calculator;
+
+    @Rule
+    public ExpectedException expectedException = ExpectedException.none();
 
     @Before
     public void setUp() {
@@ -81,6 +87,13 @@ public class StringCalculatorTest {
     })
     public void addShouldIgnoreLastCommaInArgument(String numbers, int result) {
         assertThat(calculator.add(numbers), is(result));
+    }
+
+    @Test
+    public void addingNullStringThrowsIllegalArgumentException() {
+        expectedException.expect(IllegalArgumentException.class);
+        expectedException.expectMessage(equalToIgnoringCase("null string not allowed"));
+        calculator.add(null);
     }
 
 
