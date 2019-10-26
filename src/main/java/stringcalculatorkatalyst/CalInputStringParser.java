@@ -19,7 +19,7 @@ class CalInputStringParser {
 
     }
 
-    public String[] split(String stringNumber) {
+    public int[] parse(String stringNumber) {
 
         String val = stringNumber.trim();
 
@@ -33,17 +33,7 @@ class CalInputStringParser {
             stringNumberStream = pattern.splitAsStream(val);
         }
 
-        return stringNumberStream.map(String::trim).toArray(String[]::new);
-    }
-
-    public int[] parse(String stringNumber) {
-        String[] stringNumbers = split(stringNumber);
-
-        int[] integers = new int[stringNumbers.length];
-        for (int index = 0; index < stringNumbers.length; index++) {
-            integers[index] = Integer.parseInt(stringNumbers[index]);
-        }
-        return integers;
+        return stringNumberStream.map(String::trim).mapToInt(Integer::parseInt).toArray();
     }
 
     private Stream<String> splitWithCustomSeparator(String stringNumber) {
