@@ -1,4 +1,4 @@
 package stringcalculatorkatalyst;
 
-public class CustomSeparatorPatternFactory {
+public interface CustomSeparatorPatternFactory {
 }
