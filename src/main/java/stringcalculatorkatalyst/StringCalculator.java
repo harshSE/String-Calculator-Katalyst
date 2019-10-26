@@ -24,18 +24,18 @@ public class StringCalculator {
     }
 
     private int addNumbers(String stringNumber) throws IllegalArgumentException{
-        String[] stringNumbers = parser.split(stringNumber);
+        int[] stringNumbers = parser.parse(stringNumber);
 
-        int sum = toInt(stringNumbers[0]);
+        int sum = validate(stringNumbers[0]);
         for(int index = 1; index < stringNumbers.length; index++) {
-            sum += toInt(stringNumbers[index]);
+            sum += validate(stringNumbers[index]);
         }
 
         return sum;
     }
 
-    private int toInt(String stringNumber) {
-        int val = parseInt(stringNumber);
+    private int validate(int val) {
+
         if(val < 0) {
             throw new IllegalArgumentException("negatives not allowed");
         }
