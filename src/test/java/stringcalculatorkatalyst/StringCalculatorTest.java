@@ -8,7 +8,6 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
-import stringcalculatorkatalyst.exception.ValidationException;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.equalToIgnoringCase;
@@ -82,9 +81,9 @@ public class StringCalculatorTest {
 
 
     @Test
-    public void addShouldThrowValidationFailExceptionWhenParsingFail() {
-        doThrow(new ValidationException("parsing fail")).when(parser).parse(anyString());
-        expectedException.expect(ValidationException.class);
+    public void addShouldThrowIllegalArgumentExceptionWhenParsingFail() {
+        doThrow(new IllegalArgumentException("parsing fail")).when(parser).parse(anyString());
+        expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage(equalToIgnoringCase("parsing fail"));
 
         calculator.add("//[[\n1***1");
