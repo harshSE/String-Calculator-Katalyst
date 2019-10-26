@@ -30,9 +30,10 @@ public class StringCalculatorTest {
 
     @Test
     @Parameters({
-            "1\\,1,2"
+            "1\\,1,2",
+            "-1\\,1,0"
     })
-    public void addingTwoStringIntegerNumbers_ReturnTheirSum(String number, int result) {
-        assertThat(calculator.add(number), is(result));
+    public void addingTwoStringIntegerNumbers_ReturnTheirSum(String numbers, int result) {
+        assertThat(calculator.add(numbers), is(result));
     }
 }
