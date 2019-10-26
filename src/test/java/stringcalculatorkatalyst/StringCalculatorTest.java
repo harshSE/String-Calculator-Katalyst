@@ -96,5 +96,12 @@ public class StringCalculatorTest {
         calculator.add(null);
     }
 
+    @Test
+    @Parameters({
+            "1\\,1\\,2,4"
+    })
+    public void addingArbitraryNumberReturnTheirSum(String numbers, int result) {
+        assertThat(calculator.add(numbers), is(result));
+    }
 
 }
