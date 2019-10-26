@@ -32,7 +32,7 @@ public class StringParserTest {
             "1\\,1\\,1,1,1,1",
             "1\\,,1",
     })
-    public void addShouldIgnoreLastCommaInArgument(String numbers, String [] result) {
+    public void splitShouldIgnoreLastCommaInArgument(String numbers, String [] result) {
         assertThat(parser.split(numbers), is(equalTo(result)));
     }
 
@@ -63,7 +63,7 @@ public class StringParserTest {
 
     @Test
     @Parameters(method = "commaSeparatedNumbers, newLineSeparatedNumbers, newLineAndCommaSeparatedNumbers")
-    public void addingArbitraryNumberWihNewLineOrCommaSeparatorReturnTheirSum(String numbers, String [] result) {
+    public void splittingArbitraryNumberWihNewLineOrCommaSeparator(String numbers, String [] result) {
         assertThat(parser.split(numbers), is(equalTo(result)));
     }
 
@@ -73,7 +73,7 @@ public class StringParserTest {
             "//*\n1*2,1,2",
             "//[\n1[2,1,2"
     })
-    public void addShouldSupportCustomSeparator(String numbers, String [] result) {
+    public void splitShouldSupportCustomSeparator(String numbers, String [] result) {
         assertThat(parser.split(numbers), is(equalTo(result)));
     }
 
@@ -84,7 +84,7 @@ public class StringParserTest {
             "//[+++]\n1+++1,1,1",
             "//[^^^]\n1^^^1\n2,1,1,2",
     })
-    public void addShouldAllowSeparatorWithArbitraryLenght(String numbers, String [] result) {
+    public void splitShouldAllowSeparatorWithArbitraryLength(String numbers, String [] result) {
         assertThat(parser.split(numbers), is(equalTo(result)));
     }
 
@@ -93,7 +93,7 @@ public class StringParserTest {
             "//[[\n1***1",
             "//***\n1***1",
     })
-    public void addShouldThrowValidationFailExceptionWhenMoreThenOneCharacterFoundWithoutBracket(String numbers) {
+    public void splitShouldThrowValidationFailExceptionWhenMoreThenOneCharacterFoundWithoutBracket(String numbers) {
         expectedException.expect(ValidationException.class);
         expectedException.expectMessage(equalToIgnoringCase("Only single character is allowed as custom separator"));
         parser.split(numbers);
@@ -101,7 +101,7 @@ public class StringParserTest {
 
 
     @Test
-    public void addShouldThrowValidationFailExceptionWhenNoSeparatorProvided() {
+    public void splitShouldThrowValidationFailExceptionWhenNoSeparatorProvided() {
         expectedException.expect(ValidationException.class);
         expectedException.expectMessage(equalToIgnoringCase("No separator provided"));
         parser.split("//\n1***1");
@@ -109,14 +109,14 @@ public class StringParserTest {
 
 
     @Test
-    public void addShouldThrowValidationFailExceptionWhenNoSeparatorProvidedBetweenBracket() {
+    public void splitShouldThrowValidationFailExceptionWhenNoSeparatorProvidedBetweenBracket() {
         expectedException.expect(ValidationException.class);
         expectedException.expectMessage(equalToIgnoringCase("No separator provided between bracket"));
         parser.split("//[]\n1***1");
     }
 
     @Test
-    public void addShouldThrowValidationFailExceptionWhenClosingBracketNotProvided() {
+    public void splitShouldThrowValidationFailExceptionWhenClosingBracketNotProvided() {
         expectedException.expect(ValidationException.class);
         expectedException.expectMessage(equalToIgnoringCase("No closing bracket provided"));
         parser.split("//[***\n1***1");
