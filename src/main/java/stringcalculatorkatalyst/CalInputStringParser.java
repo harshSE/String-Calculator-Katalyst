@@ -1,11 +1,12 @@
 package stringcalculatorkatalyst;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 import static java.util.Arrays.asList;
-import static java.util.Collections.singletonList;
 
 class CalInputStringParser {
 
@@ -39,6 +40,7 @@ class CalInputStringParser {
 
         return stringNumberStream.map(String::trim).mapToInt(Integer::parseInt).toArray();
     }
+    
 
     private Pattern createPattern(String customSeparatorString) {
 
