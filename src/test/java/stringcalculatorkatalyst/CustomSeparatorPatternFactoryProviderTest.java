@@ -33,4 +33,13 @@ public class CustomSeparatorPatternFactoryProviderTest {
         assertTrue(customSeparatorPatternFactoryProvider.get(argument) instanceof MultipleCommaAndSingleCharSeparatorFactory);
     }
 
+    @Test
+    @Parameters({
+            "[**]",
+            "[***]"
+    })
+    public void getShouldReturnInstanceOfSingleBracketAndMultipleCharsInstanceWhenMatchingArgumentFound(String argument) {
+        assertTrue(customSeparatorPatternFactoryProvider.get(argument) instanceof SingleBracketAndMultipleChars);
+    }
+
 }
