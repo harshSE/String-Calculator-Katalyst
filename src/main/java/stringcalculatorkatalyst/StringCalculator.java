@@ -18,7 +18,13 @@ public class StringCalculator {
 
     private int addNumbers(String stringNumber) {
         String[] stringNumbers = stringNumber.split(",");
-        return toInt(stringNumbers[0]) + toInt(stringNumbers[1]);
+
+        int sum = toInt(stringNumbers[0]);
+        if(stringNumbers.length == 2) {
+            sum += toInt(stringNumbers[1]);
+        }
+
+        return sum;
     }
 
     private int toInt(String stringNumber) {
