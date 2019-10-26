@@ -39,7 +39,7 @@ public class CustomSeparatorPatternFactoryProviderTest {
             "[***]"
     })
     public void getShouldReturnInstanceOfSingleBracketAndMultipleCharsInstanceWhenMatchingArgumentFound(String argument) {
-        assertTrue(customSeparatorPatternFactoryProvider.get(argument) instanceof SingleBracketAndMultipleChars);
+        assertTrue(customSeparatorPatternFactoryProvider.get(argument) instanceof SingleBracketAndMultipleCharsSeparatorFactory);
     }
 
 }
