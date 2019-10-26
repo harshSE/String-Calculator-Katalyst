@@ -90,15 +90,11 @@ public class StringCalculatorTest {
         assertThat(calculator.add(numbers), is(result));
     }
 
-    @Test
-    @Parameters({
-            "//[[\n1***1",
-            "//***\n1***1",
-    })
-    public void addShouldThrowValidationFailExceptionWhenMoreThenOneCharacterFoundWithoutBracket(String numbers) {
+
+    public void addShouldThrowValidationFailExceptionWhenParsingFail() {
         expectedException.expect(ValidationException.class);
-        expectedException.expectMessage(equalToIgnoringCase("Only single character is allowed as custom separator"));
-        calculator.add(numbers);
+        expectedException.expectMessage(equalToIgnoringCase("parsing fail"));
+        calculator.add("//[[\n1***1");
     }
 
 }
