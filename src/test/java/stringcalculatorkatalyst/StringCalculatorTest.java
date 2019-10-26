@@ -129,4 +129,11 @@ public class StringCalculatorTest {
         assertThat(calculator.add(numbers), is(result));
     }
 
+    @Test
+    public void addingNegativeNumberThrowIllegalArgumentException() {
+        expectedException.expect(IllegalArgumentException.class);
+        expectedException.expectMessage(equalToIgnoringCase("negatives not allowed"));
+        calculator.add("1,-1");
+    }
+
 }
