@@ -9,7 +9,6 @@ public class StringCalculator {
     private Pattern pattern;
 
     public StringCalculator() {
-
         pattern = Pattern.compile(",|\n");
     }
     public int add(String stringNumber) throws IllegalArgumentException{
@@ -26,7 +25,17 @@ public class StringCalculator {
     }
 
     private int addNumbers(String stringNumber) {
-        String[] stringNumbers = pattern.split(stringNumber);
+        String[] stringNumbers;
+        if(stringNumber.startsWith("//")) {
+            int endIndex = stringNumber.indexOf("\\n");
+            String customSeparator = stringNumber.substring(2, endIndex);
+            String substring = stringNumber.substring(endIndex+2);
+            stringNumbers = substring.split(",|\n|" + customSeparator);
+        } else {
+            stringNumbers = pattern.split(stringNumber);
+        }
+
+
 
         int sum = toInt(stringNumbers[0]);
         for(int index = 1; index < stringNumbers.length; index++) {
