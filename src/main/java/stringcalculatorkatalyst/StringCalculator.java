@@ -18,7 +18,12 @@ public class StringCalculator {
     }
 
     private int addNumbers(String stringNumber) {
-        String[] stringNumbers = stringNumber.split(",");
+        String separator = ",";
+
+        if(stringNumber.contains("\n")) {
+            separator = "\n";
+        }
+        String[] stringNumbers = stringNumber.split(separator);
 
         int sum = toInt(stringNumbers[0]);
         for(int index = 1; index < stringNumbers.length; index++) {
