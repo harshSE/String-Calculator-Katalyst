@@ -83,7 +83,7 @@ public class StringCalculatorTest {
 
     @Test
     public void addShouldThrowValidationFailExceptionWhenParsingFail() {
-        doThrow(new ValidationException("parsing fail")).when(parser).split(anyString());
+        doThrow(new ValidationException("parsing fail")).when(parser).parse(anyString());
         expectedException.expect(ValidationException.class);
         expectedException.expectMessage(equalToIgnoringCase("parsing fail"));
 
