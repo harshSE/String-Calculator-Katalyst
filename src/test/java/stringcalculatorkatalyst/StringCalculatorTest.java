@@ -27,7 +27,6 @@ public class StringCalculatorTest {
     @Test
     @Parameters({
             "1,1",
-            "-1,-1",
             "0,0",
     })
     public void addingOneStringIntegerNumber_ReturnSameNumber(String number, int result) {
@@ -83,18 +82,9 @@ public class StringCalculatorTest {
     public String[]  commaSeparatedNumbers() {
         return new String []{
             "1\\,1\\,2,4",
-            "1\\,1\\,-2,0",
             "1\\,0\\,2\\,5,8",
-            "-1\\,-1\\,2\\,4\\,8,12",
             "1\\,1,2",
-            "-1\\,1,0",
-            "1\\,-1,0",
-            "-1\\,-1,-2",
             "0\\,0,0",
-            "-1\\,2,1",
-            "2\\,-1,1",
-            "-2\\,1,-1",
-            "1\\,-2,-1"
         };
     }
 
