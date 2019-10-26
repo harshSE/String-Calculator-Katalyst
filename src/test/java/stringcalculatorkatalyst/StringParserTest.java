@@ -68,6 +68,12 @@ public class StringParserTest {
     }
 
     @Test
+    @Parameters(method = "commaSeparatedNumbers, newLineSeparatedNumbers, newLineAndCommaSeparatedNumbers")
+    public void parsingArbitraryNumberWihNewLineOrCommaSeparator(String numbers, int [] result) {
+        assertThat(parser.parse(numbers), is(equalTo(result)));
+    }
+
+    @Test
     @Parameters({
             "//;\n1;2,1,2",
             "//*\n1*2,1,2",
@@ -135,5 +141,7 @@ public class StringParserTest {
     public void addShouldRemoveWhiteSpacesBetweenNumbers() {
         assertThat(parser.split("1 ,  2"), is(equalTo(new String[]{"1","2"})));
     }
+
+
 
 }

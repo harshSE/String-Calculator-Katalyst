@@ -33,7 +33,6 @@ class CalInputStringParser {
             stringNumberStream = pattern.splitAsStream(val);
         }
 
-
         return stringNumberStream.map(String::trim).toArray(String[]::new);
     }
 
@@ -79,7 +78,7 @@ class CalInputStringParser {
     }
 
     private Stream<String> splitWithCustomSeparator(String stringNumber, int endIndexOfNewLineChar, int beginIndex, int endIndex) {
-        String[] stringNumbers;
+
         String customSeparator = stringNumber.substring(beginIndex, endIndex);
         String substring = stringNumber.substring(endIndexOfNewLineChar + 1);
         String regexString = createRegexString(customSeparator);
