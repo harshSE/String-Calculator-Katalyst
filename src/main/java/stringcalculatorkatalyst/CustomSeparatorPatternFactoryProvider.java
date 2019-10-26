@@ -9,6 +9,8 @@ public class CustomSeparatorPatternFactoryProvider {
 
         if(pattern.matcher(customSeparatorString).matches()) {
             return new MultipleCommaAndSingleCharSeparatorFactory();
+        } else if(customSeparatorString.startsWith("[") && Pattern.compile("^\\[[^\\]]+\\]").matcher(customSeparatorString).matches()) {
+           return new SingleBracketAndMultipleChars();
         } else {
             return null;
         }
