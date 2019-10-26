@@ -1,5 +1,7 @@
 package stringcalculatorkatalyst;
 
+import stringcalculatorkatalyst.exception.ValidationException;
+
 import java.util.HashSet;
 import java.util.regex.Pattern;
 
@@ -54,6 +56,9 @@ public class StringCalculator {
 
     private String[] splitWithCustomSeparator(String stringNumber) {
         int endIndexOfNewLineChar = stringNumber.indexOf("\n");
+        if(endIndexOfNewLineChar != 3) {
+            throw new ValidationException("Only single character is allowed as custom separator");
+        }
         return splitWithCustomSeparator(stringNumber, endIndexOfNewLineChar, 2, endIndexOfNewLineChar);
     }
 
