@@ -26,78 +26,47 @@ class CalInputStringParser {
 
         Pattern patternToUsed;
 
-        String substring = val;
-        if(stringNumber.startsWith("//")) {
+        String stringNumberToParse = val;
+        if(val.startsWith("//")) {
             int startIndexOfNewLineChar = val.indexOf("\n");
-            substring = stringNumber.substring(startIndexOfNewLineChar + 1);
-            patternToUsed = createPattern(val);
+            stringNumberToParse = val.substring(startIndexOfNewLineChar + 1);
+            patternToUsed = createPattern(val.substring(2, startIndexOfNewLineChar));
         } else {
             patternToUsed = pattern;
         }
 
-
-
-        stringNumberStream = patternToUsed.splitAsStream(substring);
-
+        stringNumberStream = patternToUsed.splitAsStream(stringNumberToParse);
 
         return stringNumberStream.map(String::trim).mapToInt(Integer::parseInt).toArray();
     }
 
-    private Pattern createPattern(String stringNumber) {
-        int startIndexOfNewLineChar = stringNumber.indexOf("\n");
+    private Pattern createPattern(String customSeparatorString) {
 
         Pattern pattern1 = Pattern.compile("^(\\[.\\])+");
 
-        if(pattern1.matcher(stringNumber.substring(2,startIndexOfNewLineChar)).matches()) {
-            List<String> separators = new ArrayList<>();
-            for(int index = 2; index < startIndexOfNewLineChar; index+=3) {
-                if(stringNumber.charAt(index) == '[' && stringNumber.charAt(index+2) == ']') {
-                    char separator = stringNumber.charAt(index + 1);
+        List<String> separators = new ArrayList<>();
+
+        if(pattern1.matcher(customSeparatorString).matches()) {
+            for(int index = 0; index < customSeparatorString.length(); index+=3) {
+                if(customSeparatorString.charAt(index) == '[' && customSeparatorString.charAt(index+2) == ']') {
+                    char separator = customSeparatorString.charAt(index + 1);
                     separators.add(""+separator);
                 }
             }
 
-            String regex = createRegex(separators);
-            return Pattern.compile(regex);
-
-        } else if(stringNumber.startsWith("//[") && Pattern.compile("^\\[[^\\]]+\\]").matcher(stringNumber.substring(2,startIndexOfNewLineChar)).matches()) {
-            int endIndex = startIndexOfNewLineChar - 1;
-            String customSeparator = stringNumber.substring(3, endIndex);
-            String regexString = createRegex(singletonList(customSeparator));
-            return  Pattern.compile(regexString);
-        } else if(Pattern.compile("^.").matcher(stringNumber.substring(2,startIndexOfNewLineChar)).matches()) {
-            String customSeparator = stringNumber.substring(2, startIndexOfNewLineChar);
-            String regexString = createRegex(singletonList(customSeparator));
-            return Pattern.compile(regexString);
+        } else if(customSeparatorString.startsWith("[") && Pattern.compile("^\\[[^\\]]+\\]").matcher(customSeparatorString).matches()) {
+            String customSeparator = customSeparatorString.substring(1, customSeparatorString.length() - 1);
+            separators.add(customSeparator);
+        } else if(Pattern.compile("^.").matcher(customSeparatorString).matches()) {
+            separators.add(customSeparatorString);
         } else {
             throw new IllegalArgumentException("Invalid expression provided after //");
         }
 
-    }
-
-
-
-    private Stream<String> splitWithCustomSeparator(String stringNumber) {
-        int endIndexOfNewLineChar = stringNumber.indexOf("\n");
-        return splitWithCustomSeparator(stringNumber, endIndexOfNewLineChar, 2, endIndexOfNewLineChar);
-    }
-
-    private Stream<String> splitWithArbitraryLengthOfCustomSeparator(String stringNumber) {
-        int endIndexOfNewLineChar = stringNumber.indexOf("\n");
-        int endIndex = endIndexOfNewLineChar - 1;
-        return splitWithCustomSeparator(stringNumber, endIndexOfNewLineChar, 3, endIndex);
+        String regexString = createRegex(separators);
+        return  Pattern.compile(regexString);
 
     }
-
-    private Stream<String> splitWithCustomSeparator(String stringNumber, int endIndexOfNewLineChar, int beginIndex, int endIndex) {
-        String customSeparator = stringNumber.substring(beginIndex, endIndex);
-        String substring = stringNumber.substring(endIndexOfNewLineChar + 1);
-        String regexString = createRegex(singletonList(customSeparator));
-        Pattern pattern = Pattern.compile(regexString);
-        return  pattern.splitAsStream(substring);
-    }
-
-
 
     private String createRegex(List<String> separators) {
         StringBuilder newCustomSeparator = new StringBuilder();
@@ -117,8 +86,5 @@ class CalInputStringParser {
 
         return ",|\n" + newCustomSeparator;
     }
-
-
-
 
 }
