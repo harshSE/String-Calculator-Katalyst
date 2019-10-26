@@ -1,21 +1,17 @@
 package stringcalculatorkatalyst;
 
-import java.util.*;
+import java.util.Objects;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
-
-import static java.util.Arrays.asList;
 
 class CalInputStringParser {
 
     private Pattern pattern;
     private CustomSeparatorPatternFactoryProvider provider;
-    private HashSet<Character> escapeCharacters;
 
     public CalInputStringParser(CustomSeparatorPatternFactoryProvider provider) {
         pattern = Pattern.compile("[,\n]");
         this.provider = provider;
-        this.escapeCharacters = new HashSet<>(asList('\\','^','*', '$','.','|','?','+','(',')','[',']','{','}'));
     }
 
     public int[] parse(String stringNumber) throws IllegalArgumentException{
@@ -51,48 +47,6 @@ class CalInputStringParser {
 
         return customSeparatorPatternFactory.createPattern(customSeparatorString);
 
-    }
-
-    private List<String> extractSeparator(String customSeparatorString) {
-        List<String> separators = new ArrayList<>();
-        for(int index = 0; index < customSeparatorString.length(); index++) {
-            if(customSeparatorString.charAt(index) == '[') {
-                String separator = fetchUntilClosingBracketNotFound(customSeparatorString, index+1);
-                index += separator.length() + 1;
-                separators.add(separator);
-            }
-        }
-
-        return separators;
-    }
-
-    private String fetchUntilClosingBracketNotFound(String customSeparatorString, int index) {
-        StringBuilder separator = new StringBuilder();
-        while (customSeparatorString.charAt(index) != ']') {
-            separator.append(customSeparatorString.charAt(index++));
-        }
-        return separator.toString();
-    }
-
-
-    protected String createRegex(List<String> separators) {
-        StringBuilder newCustomSeparator = new StringBuilder();
-        for (String separator : separators) {
-
-            newCustomSeparator.append('|');
-            for (int index = 0; index < separator.length(); index++) {
-                char customSeparatorChar = separator.charAt(index);
-
-                if(escapeCharacters.contains(customSeparatorChar)) {
-                    newCustomSeparator.append("\\").append(customSeparatorChar);
-                } else {
-                    newCustomSeparator.append(customSeparatorChar);
-                }
-            }
-
-        }
-
-        return ",|\n" + newCustomSeparator;
     }
 
 }
