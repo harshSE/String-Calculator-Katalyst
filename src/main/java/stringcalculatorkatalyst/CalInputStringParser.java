@@ -19,7 +19,7 @@ class CalInputStringParser {
         escapeCharacters = new HashSet<>(asList('\\','^','*', '$','.','|','?','+','(',')','[',']','{','}'));
     }
 
-    public int[] parse(String stringNumber) {
+    public int[] parse(String stringNumber) throws IllegalArgumentException{
 
         String val = stringNumber.trim();
 
@@ -40,7 +40,7 @@ class CalInputStringParser {
 
         return stringNumberStream.map(String::trim).mapToInt(Integer::parseInt).toArray();
     }
-    
+
 
     private Pattern createPattern(String customSeparatorString) {
 
