@@ -25,7 +25,7 @@ public class StringCalculatorTest {
 
     @Before
     public void setUp() {
-        parser = Mockito.spy(new CalInputStringParser());
+        parser = Mockito.spy(new CalInputStringParser(new CustomSeparatorPatternFactoryProvider()));
         calculator = new StringCalculator(parser);
     }
 

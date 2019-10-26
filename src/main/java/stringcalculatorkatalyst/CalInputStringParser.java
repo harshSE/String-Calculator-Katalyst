@@ -9,10 +9,9 @@ class CalInputStringParser {
     private Pattern pattern;
     private CustomSeparatorPatternFactoryProvider provider;
 
-
-    public CalInputStringParser() {
+    public CalInputStringParser(CustomSeparatorPatternFactoryProvider provider) {
         pattern = Pattern.compile("[,\n]");
-        provider = new CustomSeparatorPatternFactoryProvider();
+        this.provider = provider;
     }
 
     public int[] parse(String stringNumber) throws IllegalArgumentException{

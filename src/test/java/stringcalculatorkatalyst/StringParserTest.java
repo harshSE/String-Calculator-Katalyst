@@ -22,7 +22,7 @@ public class StringParserTest {
 
     @Before
     public void setUp() {
-        parser = new CalInputStringParser();
+        parser = new CalInputStringParser(new CustomSeparatorPatternFactoryProvider());
     }
 
 
