@@ -16,7 +16,6 @@ class CalInputStringParser {
     public CalInputStringParser() {
         pattern = Pattern.compile("[,\n]");
         escapeCharacters = new HashSet<>(asList('\\','^','*', '$','.','|','?','+','(',')','[',']','{','}'));
-
     }
 
     public int[] parse(String stringNumber) {
