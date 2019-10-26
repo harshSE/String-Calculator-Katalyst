@@ -10,7 +10,7 @@ public class CustomSeparatorPatternFactoryProvider {
 
     public CustomSeparatorPatternFactory get(String customSeparatorString) {
         if(multipleBracketAndSingleCharPatten.matcher(customSeparatorString).matches()) {
-            return new MultipleCommaAndSingleCharSeparatorFactory();
+            return new MultipleBracketAndSingleCharSeparatorFactory();
         } else if(customSeparatorString.startsWith("[") && singleBracketAndMultipleCharPatten.matcher(customSeparatorString).matches()) {
            return new SingleBracketAndMultipleCharsSeparatorFactory();
         } else if(singleCharPatten.matcher(customSeparatorString).matches()) {

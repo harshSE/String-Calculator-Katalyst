@@ -30,7 +30,7 @@ public class CustomSeparatorPatternFactoryProviderTest {
             "[*][^]"
     })
     public void getShouldReturnInstanceOfMultipleBracketAndSingleCharInstanceWhenMatchingArgumentFound(String argument) {
-        assertTrue(customSeparatorPatternFactoryProvider.get(argument) instanceof MultipleCommaAndSingleCharSeparatorFactory);
+        assertTrue(customSeparatorPatternFactoryProvider.get(argument) instanceof MultipleBracketAndSingleCharSeparatorFactory);
     }
 
     @Test

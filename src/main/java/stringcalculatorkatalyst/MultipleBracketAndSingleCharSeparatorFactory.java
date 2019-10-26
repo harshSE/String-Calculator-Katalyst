@@ -1,0 +1,4 @@
+package stringcalculatorkatalyst;
+
+public class MultipleBracketAndSingleCharSeparatorFactory implements CustomSeparatorPatternFactory{
+}

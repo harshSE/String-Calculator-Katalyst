@@ -1,4 +1,0 @@
-package stringcalculatorkatalyst;
-
-public class MultipleCommaAndSingleCharSeparatorFactory implements CustomSeparatorPatternFactory{
-}
