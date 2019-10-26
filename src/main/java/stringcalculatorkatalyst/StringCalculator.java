@@ -9,11 +9,7 @@ public class StringCalculator {
             return 0;
         }
 
-        if(stringNumber.contains(",")) {
-            return addNumbers(stringNumber);
-        } else {
-            return toInt(stringNumber);
-        }
+        return addNumbers(stringNumber);
     }
 
     private int addNumbers(String stringNumber) {
