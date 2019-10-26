@@ -27,4 +27,12 @@ public class StringCalculatorTest {
     public void addingOneStringIntegerNumber_ReturnSameNumber(String number, int result) {
         assertThat(calculator.add(number), is(result));
     }
+
+    @Test
+    @Parameters({
+            "1\\,1,2"
+    })
+    public void addingTwoStringIntegerNumbers_ReturnTheirSum(String number, int result) {
+        assertThat(calculator.add(number), is(result));
+    }
 }
