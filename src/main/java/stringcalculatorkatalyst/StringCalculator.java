@@ -10,13 +10,10 @@ import static java.util.Arrays.asList;
 import static java.util.Objects.isNull;
 
 public class StringCalculator {
-    private Pattern pattern;
-    private HashSet<Character> escapeCharacters;
+    
     private CalInputStringParser parser;
 
     public StringCalculator() {
-        pattern = Pattern.compile("[,\n]");
-        escapeCharacters = new HashSet<>(asList('\\','^','*', '$','.','|','?','+','(',')','[',']','{','}'));
         parser = new CalInputStringParser();
 
     }
