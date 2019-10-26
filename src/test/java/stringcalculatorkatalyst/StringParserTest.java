@@ -96,6 +96,12 @@ public class StringParserTest {
         assertThat(parser.parse(numbers), is(equalTo(result)));
     }
 
+
+    @Test
+    public void splitShouldAllowMultipleSeparatorsWithSingleCharacter() {
+        assertThat(parser.parse("//[*][+][^]\n1*1+2^3"), is(equalTo(new int[]{1,2,3})));
+    }
+
     public Object[][]  moreThenOneCharacterFoundWithoutBracket() {
         return new Object [][]{
                 {"//[[\n1***1"},
