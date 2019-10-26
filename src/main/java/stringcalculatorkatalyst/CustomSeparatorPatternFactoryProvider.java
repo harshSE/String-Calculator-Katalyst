@@ -11,6 +11,8 @@ public class CustomSeparatorPatternFactoryProvider {
             return new MultipleCommaAndSingleCharSeparatorFactory();
         } else if(customSeparatorString.startsWith("[") && Pattern.compile("^\\[[^\\]]+\\]").matcher(customSeparatorString).matches()) {
            return new SingleBracketAndMultipleCharsSeparatorFactory();
+        } else if(Pattern.compile("^.").matcher(customSeparatorString).matches()) {
+            return new SingleCharSeparatorFactory();
         } else {
             return null;
         }
