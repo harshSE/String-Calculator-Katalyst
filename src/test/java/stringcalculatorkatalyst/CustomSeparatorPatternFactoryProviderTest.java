@@ -1,8 +1,9 @@
 package stringcalculatorkatalyst;
 
-import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
 
 public class CustomSeparatorPatternFactoryProviderTest {
@@ -14,6 +15,6 @@ public class CustomSeparatorPatternFactoryProviderTest {
     }
     @Test
     public void getShouldReturnNullWhenNotMatchingProviderFound() {
-        assertThat(customSeparatorPatternFactoryProvider.get(";;"), CoreMatchers.is(CoreMatchers.nullValue()));
+        assertThat(customSeparatorPatternFactoryProvider.get(";;"), is(nullValue()));
     }
 }
