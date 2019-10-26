@@ -34,7 +34,7 @@ public class StringParserTest {
     }
     @Test
     @Parameters(method = "lastCommaInArgument")
-    public void splitShouldIgnoreLastCommaInArgument(String numbers, int [] result) {
+    public void parseShouldIgnoreLastCommaInArgument(String numbers, int [] result) {
         assertThat(parser.parse(numbers), is(equalTo(result)));
     }
 
@@ -77,7 +77,7 @@ public class StringParserTest {
 
     @Test
     @Parameters(method = "customSeparator")
-    public void splitShouldSupportCustomSeparator(String numbers, int [] result) {
+    public void parseShouldSupportCustomSeparator(String numbers, int [] result) {
         assertThat(parser.parse(numbers), is(equalTo(result)));
     }
 
@@ -91,13 +91,13 @@ public class StringParserTest {
     }
     @Test
     @Parameters(method = "separatorWithArbitraryLength")
-    public void splitShouldAllowSeparatorWithArbitraryLength(String numbers, int [] result) {
+    public void parseShouldAllowSeparatorWithArbitraryLength(String numbers, int [] result) {
         assertThat(parser.parse(numbers), is(equalTo(result)));
     }
 
 
     @Test
-    public void splitShouldAllowMultipleSeparatorsWithSingleCharacter() {
+    public void parseShouldAllowMultipleSeparatorsWithSingleCharacter() {
         assertThat(parser.parse("//[*][+][^]\n1*1+2^3"), is(equalTo(new int[]{1,1,2,3})));
     }
 
@@ -111,7 +111,7 @@ public class StringParserTest {
 
     @Test
     @Parameters(method = "multipleSeparatorsWithMultipleCharacters")
-    public void splitShouldThrowIllegalArgumentExceptionWhenMultipleSeparatorsWithMultipleCharactersFound(String numbers) {
+    public void parseShouldThrowIllegalArgumentExceptionWhenMultipleSeparatorsWithMultipleCharactersFound(String numbers) {
         expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage(equalToIgnoringCase("Invalid expression provided after //"));
         parser.parse(numbers);
@@ -126,7 +126,7 @@ public class StringParserTest {
 
     @Test
     @Parameters(method = "moreThenOneCharacterFoundWithoutBracket")
-    public void splitShouldThrowIllegalArgumentExceptionWhenMoreThenOneCharacterFoundWithoutBracket(String numbers) {
+    public void parseShouldThrowIllegalArgumentExceptionWhenMoreThenOneCharacterFoundWithoutBracket(String numbers) {
         expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage(equalToIgnoringCase("Invalid expression provided after //"));
         parser.parse(numbers);
@@ -134,7 +134,7 @@ public class StringParserTest {
 
 
     @Test
-    public void splitShouldThrowIllegalArgumentExceptionWhenNoSeparatorProvided() {
+    public void parseShouldThrowIllegalArgumentExceptionWhenNoSeparatorProvided() {
         expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage(equalToIgnoringCase("Invalid expression provided after //"));
         parser.parse("//\n1***1");
@@ -142,21 +142,21 @@ public class StringParserTest {
 
 
     @Test
-    public void splitShouldThrowIllegalArgumentExceptionWhenNoSeparatorProvidedBetweenBracket() {
+    public void parseShouldThrowIllegalArgumentExceptionWhenNoSeparatorProvidedBetweenBracket() {
         expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage(equalToIgnoringCase("Invalid expression provided after //"));
         parser.parse("//[]\n1***1");
     }
 
     @Test
-    public void splitShouldThrowIllegalArgumentExceptionWhenClosingBracketNotProvided() {
+    public void parseShouldThrowIllegalArgumentExceptionWhenClosingBracketNotProvided() {
         expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage(equalToIgnoringCase("Invalid expression provided after //"));
         parser.parse("//[***\n1***1");
     }
 
     @Test
-    public void addShouldRemoveHeadingAndTrailingWhiteSpace() {
+    public void parseShouldRemoveHeadingAndTrailingWhiteSpace() {
         assertThat(parser.parse(" 1 "), is(equalTo(new int[]{1})));
         /*
             as paramrunner trim the arguments, adding two test cases to ease. other option is hierarchical context runner
@@ -165,7 +165,7 @@ public class StringParserTest {
     }
 
     @Test
-    public void addShouldRemoveWhiteSpacesBetweenNumbers() {
+    public void parseShouldRemoveWhiteSpacesBetweenNumbers() {
         assertThat(parser.parse("1 ,  2"), is(equalTo(new int[]{1,2})));
     }
 
