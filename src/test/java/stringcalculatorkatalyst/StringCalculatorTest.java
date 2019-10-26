@@ -126,4 +126,9 @@ public class StringCalculatorTest {
         calculator.add("1,-1");
     }
 
+    @Test
+    public void addingNumberBiggerThan1000WillBeIgnored() {
+        assertThat(calculator.add("1000,1001"), is(1000));
+    }
+
 }
