@@ -100,4 +100,12 @@ public class StringCalculatorTest {
         assertThat(calculator.add(numbers), is(result));
     }
 
+    @Test
+    @Parameters({
+            "1\n1\n2,4",
+    })
+    public void addingArbitraryNumberWihNewLineSeperatorReturnTheirSum(String numbers, int result) {
+        assertThat(calculator.add(numbers), is(result));
+    }
+
 }
