@@ -54,6 +54,11 @@ public class StringCalculator {
         if(val < 0) {
             throw new IllegalArgumentException("negatives not allowed");
         }
+
+        if(val > 1000) {
+            return 0;
+        }
+
         return val;
     }
 }
