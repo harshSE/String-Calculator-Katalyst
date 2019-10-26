@@ -111,32 +111,32 @@ public class StringParserTest {
 
     @Test
     @Parameters(method = "moreThenOneCharacterFoundWithoutBracket")
-    public void splitShouldThrowValidationFailExceptionWhenMoreThenOneCharacterFoundWithoutBracket(String numbers) {
-        expectedException.expect(ValidationException.class);
-        expectedException.expectMessage(equalToIgnoringCase("Only single character is allowed as custom separator"));
+    public void splitShouldThrowIllegalArgumentExceptionWhenMoreThenOneCharacterFoundWithoutBracket(String numbers) {
+        expectedException.expect(IllegalArgumentException.class);
+        expectedException.expectMessage(equalToIgnoringCase("Invalid expression provided after //"));
         parser.parse(numbers);
     }
 
 
     @Test
-    public void splitShouldThrowValidationFailExceptionWhenNoSeparatorProvided() {
-        expectedException.expect(ValidationException.class);
-        expectedException.expectMessage(equalToIgnoringCase("No separator provided"));
+    public void splitShouldThrowIllegalArgumentExceptionWhenNoSeparatorProvided() {
+        expectedException.expect(IllegalArgumentException.class);
+        expectedException.expectMessage(equalToIgnoringCase("Invalid expression provided after //"));
         parser.parse("//\n1***1");
     }
 
 
     @Test
-    public void splitShouldThrowValidationFailExceptionWhenNoSeparatorProvidedBetweenBracket() {
-        expectedException.expect(ValidationException.class);
-        expectedException.expectMessage(equalToIgnoringCase("No separator provided between bracket"));
+    public void splitShouldThrowIllegalArgumentExceptionWhenNoSeparatorProvidedBetweenBracket() {
+        expectedException.expect(IllegalArgumentException.class);
+        expectedException.expectMessage(equalToIgnoringCase("Invalid expression provided after //"));
         parser.parse("//[]\n1***1");
     }
 
     @Test
-    public void splitShouldThrowValidationFailExceptionWhenClosingBracketNotProvided() {
-        expectedException.expect(ValidationException.class);
-        expectedException.expectMessage(equalToIgnoringCase("No closing bracket provided"));
+    public void splitShouldThrowIllegalArgumentExceptionWhenClosingBracketNotProvided() {
+        expectedException.expect(IllegalArgumentException.class);
+        expectedException.expectMessage(equalToIgnoringCase("Invalid expression provided after //"));
         parser.parse("//[***\n1***1");
     }
 
